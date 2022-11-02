@@ -1,5 +1,5 @@
 /**
- * @author Christophe Marsala (LU2IN002 2022oct)
+ * @author Ferdinand and Daniel Bujariti (LU2IN002 2022oct)
  * 
  * Gestion d'un terrain
  *
