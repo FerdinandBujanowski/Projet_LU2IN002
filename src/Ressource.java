@@ -1,5 +1,4 @@
 public class Ressource {
-
     private static int nbRessourcesCreees = 0;
     public final int ident;
     public final String type;
@@ -52,3 +51,4 @@ public class Ressource {
         return sortie;
     }
 }
+
