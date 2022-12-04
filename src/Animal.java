@@ -3,7 +3,6 @@ import java.util.ArrayList;
 
 public abstract class Animal {
 
-    protected int stepsPerTick;
     protected int currentEnergy;
     protected int currentHealth;
 
@@ -34,7 +33,7 @@ public abstract class Animal {
     }
 
     public double distance(int x, int y) {
-        return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+        return Math.sqrt(Math.pow(x - this.x, 2) + Math.pow(y - this.y, 2));
     }
     public void seDeplacer(int newX, int newY) {
         this.x = newX;
@@ -44,7 +43,9 @@ public abstract class Animal {
     public boolean tryMoveAlongVector(Point vector, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
         int absX = Math.abs(vector.x);
         int absY = Math.abs(vector.y);
-        Point relativeMovement = absX >= absY ? new Point(vector.x / absX, 0) : new Point(0, vector.y / absY);
+        Point relativeMovement = absX >= absY ?
+                new Point(vector.x / (absX != 0 ? absX : 1), 0)
+                : new Point(0, vector.y / (absY != 0 ? absY : 1));
         Point newPosition = new Point(this.x + relativeMovement.x, this.y + relativeMovement.y);
 
         if(Animal.animalBlocking(newPosition, colonyData.getOtherAntPositions(this.getPosition()))) return false;
@@ -59,22 +60,23 @@ public abstract class Animal {
     }
 
     public Point getFreePoint(Point currentPosition, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
-        Point point = null;
+        ArrayList<Point> freePoints = new ArrayList<>();
+
         ArrayList<Predator> otherPredators = new ArrayList<>(predators);
         if(this instanceof Predator) otherPredators.remove((Predator) this);
-        for(int x = -1; x < 1; x++) {
-            for(int y = -1; y < 1; y++) {
+        for(int x = -1; x <= 1; x++) {
+            for(int y = -1; y <= 1; y++) {
                 Point newPosition = new Point(currentPosition.x + x, currentPosition.x + y);
                 if(
                         !Animal.animalBlocking(newPosition, colonyData.getOtherAntPositions(this.getPosition()))
                         && !Animal.animalBlocking(newPosition, Predator.getPredatorPositions(otherPredators))
                         && !Barrier.barrierAt(barriers, newPosition.x, newPosition.y)
-                ) return newPosition;
-
-
+                        && (newPosition.x != currentPosition.x && newPosition.y != currentPosition.y)
+                ) freePoints.add(newPosition);
             }
         }
-        return point;
+        if(freePoints.size() == 0) return null;
+        else return freePoints.get((int)(Math.random() * freePoints.size()));
     }
 
     private static boolean animalBlocking(Point newPosition, ArrayList<Point> otherPositions) {

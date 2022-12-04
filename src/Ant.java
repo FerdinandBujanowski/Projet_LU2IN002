@@ -6,7 +6,7 @@ public abstract class Ant extends Animal {
     public static int antCounter = 0;
     public final int id;
 
-    protected Object[] inventory;
+    protected Ressource[] inventory;
 
     protected boolean energyZero, healthLow;
     protected Point closestRessourcePosition;
@@ -19,7 +19,7 @@ public abstract class Ant extends Animal {
         super(x, y);
         this.id = antCounter;
         antCounter++;
-        this.inventory = new Object[2]; //TODO magic number to global constant
+        this.inventory = new Ressource[2]; //TODO magic number to global constant
         this.antType = antType;
         this.currentHealth = this.antType.maxHealth;
         this.currentEnergy = this.antType.maxEnergy;

@@ -2,6 +2,8 @@ import java.util.ArrayList;
 
 public class Simulation {
 
+    public static long iteration = 0;
+
     public static final int QUEEN_X = 0, QUEEN_Y = 0;
     public static final int MAX_RESSOURCES = 35;
     public static final int EGG_COST = 50;
@@ -15,7 +17,7 @@ public class Simulation {
         this.terrain = new Terrain(lines, columns);
         this.colony = new Colony();
 
-        this.colony.onSpawnAntRequest(AntType.GATHERER_ANT, 1, 1);
+        //this.colony.onSpawnAntRequest(AntType.GATHERER_ANT, 1, 1);
         this.barriers = new ArrayList<>();
         this.establishBorders();
         this.predators = new ArrayList<>();
@@ -32,6 +34,7 @@ public class Simulation {
     }
 
     public void tick() {
+        iteration++;
 
         // 1) générer de nouvelles ressources
         if(!this.ressourcesMax()) {

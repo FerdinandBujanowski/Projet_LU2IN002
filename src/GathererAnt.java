@@ -30,19 +30,33 @@ public class GathererAnt extends Ant {
                         this.inventory[this.getLastInventoryIndex() + 1] = terrain.videCase(closest.x, closest.y);
                     } else {
                         Point vectorToRessource = new Point(closest.x - this.getX(), closest.y - this.getY());
-                        boolean movingSucceeded = this.tryMoveAlongVector(vectorToRessource, barriers, predators, colonyData);
-                        if(movingSucceeded) {
-                            if(!this.energyZero) this.currentEnergy--;
-                            else this.currentHealth--;
+                        if(this.tryMoveAlongVector(vectorToRessource, barriers, predators, colonyData)) {
+                            //moving succeeded
+                            this.calculateMovingCosts();
+                        } else {
+                            //if movement blocked, move other direction
+                            Point freePoint = this.getFreePoint(this.getPosition(), barriers, predators, colonyData);
+                            if(freePoint != null) {
+                                Point newVector = new Point(freePoint.x - this.getX(), freePoint.y - this.getY());
+                                this.tryMoveAlongVector(newVector, barriers, predators, colonyData);
+                                this.calculateMovingCosts();
+                            }
                         }
-                        //if movement blocked, move other direction
                     }
                 }
             }
             if(this.energyZero) {
                 //if food equipped eat food
-
+                if(this.getLastInventoryIndex() > -1) {
+                    this.currentEnergy += this.inventory[this.getLastInventoryIndex()].getQuantite();
+                    this.inventory[this.getLastInventoryIndex()] = null;
+                }
             }
         }
+    }
+
+    private void calculateMovingCosts() {
+        if(!this.energyZero) this.currentEnergy--;
+        else this.currentHealth--;
     }
 }

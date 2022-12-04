@@ -10,9 +10,6 @@ public class TestTerrain {
 		Simulation simulation = new Simulation(Terrain.NBLIGNESMAX, Terrain.NBCOLONNESMAX);
 		GUI gui = new GUI(simulation);
 
-		AntType antType = AntType.GATHERER_ANT;
-		Ant newAnt = antType.createNewInstance(0, 0);
-
 		while(simulation.getAsColonyData().getQueenHealth() > 0) {
 			simulation.tick();
 			gui.repaint();
