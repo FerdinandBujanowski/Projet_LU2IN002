@@ -31,7 +31,6 @@ public abstract class Animal {
     public Point getPosition() {
         return new Point(this.x, this.y);
     }
-
     public double distance(int x, int y) {
         return Math.sqrt(Math.pow(x - this.x, 2) + Math.pow(y - this.y, 2));
     }
@@ -39,7 +38,6 @@ public abstract class Animal {
         this.x = newX;
         this.y = newY;
     }
-
     public boolean tryMoveAlongVector(Point vector, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
         int absX = Math.abs(vector.x);
         int absY = Math.abs(vector.y);
@@ -88,5 +86,13 @@ public abstract class Animal {
 
     public boolean touches(Point otherPosition) {
         return Math.abs(this.getX() - otherPosition.x) <= 1 && Math.abs(this.getY() - otherPosition.y) <= 1;
+    }
+
+    //Gets animal at position pos
+    public Animal getAnimal(Point position){
+        if (this.getPosition()==position){
+            return this;
+        }
+        else return null;
     }
 }

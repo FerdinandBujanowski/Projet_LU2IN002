@@ -13,6 +13,7 @@ public class Simulation {
     public final Terrain terrain;
     public final ArrayList<Barrier> barriers;
     public final ArrayList<Predator> predators;
+    public final ArrayList<Predator> deadPredators;
 
     public Simulation(int lines, int columns) {
         this.terrain = new Terrain(lines, columns);
@@ -22,6 +23,7 @@ public class Simulation {
         this.barriers = new ArrayList<>();
         this.establishBorders();
         this.predators = new ArrayList<>();
+        this.deadPredators=new ArrayList<>();
     }
 
     private void establishBorders() {
@@ -59,13 +61,25 @@ public class Simulation {
             }
         }
 
-
-        //generate predators
-
         //tick every ant
         this.colony.tick(this.terrain, this.barriers, this.predators);
 
-        //tick every predator
+        //generate predators
+        if (Math.random() <= 0.05){ //To do: define as global variable?
+            int randX=(int) (Math.random()*Terrain.NBLIGNESMAX);
+            int randY=(int) (Math.random()*Terrain.NBCOLONNESMAX);
+            Predator p=new Predator(randX, randY);
+            this.predators.add(p);
+        }
+        //tick every predator 
+        for (Predator p: this.predators){
+            p.tick(null, this.barriers, this.predators, this.colony);
+            if (p.currentHealth<=0){
+                this.deadPredators.add(p);
+            }
+        }
+        this.predators.removeAll(this.deadPredators);
+        this.deadPredators.removeAll(this.deadPredators);
     }
 
     public ColonyData getAsColonyData() {

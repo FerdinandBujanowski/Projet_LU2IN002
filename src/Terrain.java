@@ -69,7 +69,7 @@ public final class Terrain {
     }
 
     public ArrayList<Ressource> lesRessources() {
-        ArrayList<Ressource> list = new ArrayList();
+        ArrayList<Ressource> list = new ArrayList<>();
 
         for(int lig = 0; lig < this.nbLignes; ++lig) {
             for(int col = 0; col < this.nbColonnes; ++col) {

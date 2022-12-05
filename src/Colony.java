@@ -69,5 +69,17 @@ public class Colony implements ColonyData {
     public int getQueenHealth() {
         return this.queenAnt.currentHealth;
     }
-
+    @Override
+    public Ant getAntFromPos(Point pos){
+        for (Ant a: ants){
+            if (a.getPosition()==pos) return a;
+        }
+        return null;
+    }
+    @Override
+    public void requestDamageAnt(Point pos){
+        if (getAntFromPos(pos)==null) return;
+        else if (getAntFromPos(pos) instanceof GathererAnt) getAntFromPos(pos).currentHealth-=100;
+        else getAntFromPos(pos).currentHealth--;
+    }
 }
