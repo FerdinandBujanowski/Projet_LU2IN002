@@ -48,7 +48,9 @@ class SimulationPanel extends JPanel {
         this.predators = simulation.predators;
 
         try {
-            String dir = System.getProperty("user.dir") + File.separator + "src" + File.separator + "images" + File.separator;
+            String prop=System.getProperty("user.dir");
+            String withSrc= prop.contains("src") ? "" : File.separator + "src";
+            String dir = System.getProperty("user.dir") + withSrc + File.separator + "images" + File.separator;
             QUEEN = ImageIO.read(new File(dir + "queen.png")).getScaledInstance(32, 32, 0);
             WARRIOR = ImageIO.read(new File(dir + "warrior.png")).getScaledInstance(32, 32, 0);
             GATHERER = ImageIO.read(new File(dir + "gatherer.png")).getScaledInstance(32, 32, 0);
