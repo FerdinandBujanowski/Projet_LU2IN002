@@ -11,7 +11,7 @@ public class WarriorAnt extends Ant {
     public void tick(Terrain terrain, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
         super.tick(terrain, barriers, predators, colonyData);
         //Moves randomly if no predators in terrain // or not nearby
-        if(predators.isEmpty() || !this.predatorInProximity){
+        if(predators.isEmpty() || !this.predatorInProximity) {
             int randX=(int) (Math.random()*Terrain.NBLIGNESMAX);
             int randY=(int) (Math.random()*Terrain.NBCOLONNESMAX);
             Point vectorSomewhereRandom = new Point(randX - this.getX(), randY - this.getY());
@@ -20,16 +20,14 @@ public class WarriorAnt extends Ant {
         }
         else{
             //Predators exist
-            if (this.predatorInProximity){
-                if(this.touches(closestPredatorPosition)) {
-                    //Attacks predator 
-                    Predator.getPredatorAtPosition(closestPredatorPosition.x, closestPredatorPosition.y, predators).currentHealth--;
-                }
-                else{
-                    //If predator not nearby
-                    Point predPosition=closestPredatorPosition;
-                    this.tryMoving(predPosition, barriers, predators, colonyData);
-                }
+            if(this.touches(closestPredatorPosition)) {
+                //Attacks predator
+                Predator.getPredatorAtPosition(closestPredatorPosition.x, closestPredatorPosition.y, predators).currentHealth--;
+            }
+            else{
+                //If predator not nearby
+                Point predPosition=closestPredatorPosition;
+                this.tryMoving(predPosition, barriers, predators, colonyData);
             }
         }
     }

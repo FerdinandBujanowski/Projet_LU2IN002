@@ -59,8 +59,11 @@ public class Colony implements ColonyData {
         for(Ant ant : this.ants) {
             if(ant.id == antId) {
                 if(ant.inventory[ant.getLastInventoryIndex()] != null) {
-                    Ressource currentRessource = (Ressource) ant.inventory[ant.getLastInventoryIndex()];
+                    Ressource currentRessource = ant.inventory[ant.getLastInventoryIndex()];
                     this.queenAnt.currentEnergy += currentRessource.getQuantite();
+                    if(currentRessource instanceof Berry && ((Berry) currentRessource).isFermented()) {
+                        this.queenAnt.drunkCooldown += Berry.DRUNK_TICKS;
+                    }
                     ant.inventory[ant.getLastInventoryIndex()] = null;
                 }
             }
@@ -81,7 +84,7 @@ public class Colony implements ColonyData {
     public void requestDamageAnt(Point pos) {
         Ant ant = this.getAntFromPos(pos);
         if (ant == null) return;
-        if (ant instanceof GathererAnt) ant.currentHealth-=100;
+        if (ant instanceof GathererAnt) ant.currentHealth = 0;
         else ant.currentHealth--;
     }
 

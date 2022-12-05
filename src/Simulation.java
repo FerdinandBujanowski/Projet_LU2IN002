@@ -5,7 +5,7 @@ public class Simulation {
     public static long iteration = 0;
 
     public static final int QUEEN_X = 0, QUEEN_Y = 0;
-    public static final int MAX_RESSOURCES = 20;
+    public static final int MAX_RESSOURCES = 15;
     public static final int MAX_ANTS = 20;
     public static final int MAX_PREDATORS = 5;
     public static final int EGG_COST = 100;

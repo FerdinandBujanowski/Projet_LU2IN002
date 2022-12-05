@@ -7,6 +7,7 @@ public abstract class Ant extends Animal {
     public final int id;
 
     protected Ressource[] inventory;
+    protected int drunkCooldown;
 
     protected boolean energyZero, healthLow;
     protected Point closestRessourcePosition;
@@ -36,6 +37,8 @@ public abstract class Ant extends Animal {
         }
 
         this.closestRessourcePosition = this.updateClosestRessourcePosition(terrain);
+
+        if(this.drunkCooldown > 0) this.drunkCooldown--;
     }
 
     private Point updateClosestPredatorPosition(ArrayList<Predator> predators) {

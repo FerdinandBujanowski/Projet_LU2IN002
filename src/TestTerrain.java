@@ -14,10 +14,12 @@ public class TestTerrain {
 			simulation.tick();
 			gui.repaint();
 			try {
-				Thread.sleep(50);
+				Thread.sleep(75);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
+		gui.dispose();
+		simulation.terrain.affiche(2);
 	}
 }

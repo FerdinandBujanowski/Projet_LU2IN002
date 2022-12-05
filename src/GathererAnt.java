@@ -10,16 +10,12 @@ public class GathererAnt extends Ant {
     @Override
     public void tick(Terrain terrain, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
         super.tick(terrain, barriers, predators, colonyData);
-        if (!predators.isEmpty()){
-            if(this.predatorInProximity) {
-                // run away from predator
-                assert this.closestPredatorPosition != null;
-                Point vectorToPredator = new Point(this.closestPredatorPosition.x - this.getX(), this.closestPredatorPosition.y - this.getY());
-                //invert vector pointing to predator
-                Point vectorFromPredator = new Point(vectorToPredator.x * -1, vectorToPredator.y * -1);
-                this.tryMoving(vectorFromPredator, barriers, predators, colonyData);
-
-            } 
+        if (this.predatorInProximity && this.closestPredatorPosition != null) {
+            // run away from predator
+            Point vectorToPredator = new Point(this.closestPredatorPosition.x - this.getX(), this.closestPredatorPosition.y - this.getY());
+            //invert vector pointing to predator
+            Point vectorFromPredator = new Point(vectorToPredator.x * -1, vectorToPredator.y * -1);
+            this.tryMoving(vectorFromPredator, barriers, predators, colonyData);
         }
         else {
             if(this.getLastInventoryIndex() == this.inventory.length - 1) {
@@ -47,6 +43,11 @@ public class GathererAnt extends Ant {
                 //if food equipped eat food
                 if(this.getLastInventoryIndex() > -1) {
                     this.currentEnergy += this.inventory[this.getLastInventoryIndex()].getQuantite();
+                    if(this.inventory[this.getLastInventoryIndex()] instanceof Berry) {
+                        if(((Berry) this.inventory[this.getLastInventoryIndex()]).isFermented()) {
+                            this.drunkCooldown += Berry.DRUNK_TICKS;
+                        }
+                    }
                     this.inventory[this.getLastInventoryIndex()] = null;
                 }
             }
