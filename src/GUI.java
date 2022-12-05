@@ -19,7 +19,15 @@ public class GUI extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
         this.setResizable(false);
+        this.setCorrectLocation();
         this.setVisible(true);
+    }
+
+    private void setCorrectLocation() {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int posX = (screenSize.width - this.getWidth()) / 2;
+        int posY = (screenSize.height - this.getHeight()) / 2 - 20;
+        this.setLocation(posX, posY);
     }
 }
 
@@ -30,7 +38,7 @@ class SimulationPanel extends JPanel {
     private final ArrayList<Barrier> barriers;
     private final ArrayList<Predator> predators;
 
-    private BufferedImage QUEEN, WARRIOR, GATHERER;
+    private Image QUEEN, WARRIOR, GATHERER, BERRY, BERRY_FERMENTED, GRAIN;
 
     public SimulationPanel(Simulation simulation, Dimension size) {
         super(null);
@@ -41,9 +49,12 @@ class SimulationPanel extends JPanel {
         this.predators = simulation.predators;
 
         try {
-            QUEEN = ImageIO.read(new File("src/images/queen.png"));
-            WARRIOR = ImageIO.read(new File("src/images/warrior.png"));
-            GATHERER = ImageIO.read(new File("src/images/worker.png"));
+            QUEEN = ImageIO.read(new File("src/images/queen.png")).getScaledInstance(32, 32, 0);
+            WARRIOR = ImageIO.read(new File("src/images/warrior.png")).getScaledInstance(32, 32, 0);
+            GATHERER = ImageIO.read(new File("src/images/worker.png")).getScaledInstance(32, 32, 0);
+            BERRY = ImageIO.read(new File("src/images/berry.png")).getScaledInstance(32, 32, 0);
+            BERRY_FERMENTED = ImageIO.read(new File("src/images/berry_fermented.png")).getScaledInstance(32, 32, 0);
+            GRAIN = ImageIO.read(new File("src/images/grain.png")).getScaledInstance(32, 32, 0);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -64,11 +75,16 @@ class SimulationPanel extends JPanel {
             for(int y = 0; y < terrain.nbColonnes; y++) {
                 boolean somethingThere = false;
                 if(!terrain.caseEstVide(x, y)) {
-                    somethingThere = true;
+
                     Ressource ressource = terrain.getCase(x, y);
+                    Image currentRessourceImage = GRAIN;
                     assert ressource != null;
-                    if(ressource instanceof Berry) g.setColor(Color.RED);
-                    else g.setColor(Color.WHITE);
+                    if(ressource instanceof Berry) {
+                        if(((Berry) ressource).isFermented()) currentRessourceImage = BERRY_FERMENTED;
+                        else currentRessourceImage = BERRY;
+                    }
+                    g.drawImage(currentRessourceImage, x * stepX, y * stepY, null);
+
                 }
                 if(Predator.predatorAtPosition(x, y, predators)) {
                     somethingThere = true;
@@ -80,9 +96,9 @@ class SimulationPanel extends JPanel {
                 }
 
                 if(somethingThere) g.fillRect(x * stepX, y * stepY, stepX, stepY);
-                g.drawImage(this.QUEEN.getScaledInstance(32, 32, 0), queenPosition.x * stepX, queenPosition.y * stepY, null);
+                g.drawImage(this.QUEEN, queenPosition.x * stepX, queenPosition.y * stepY, null);
                 for(Point antPosition : colonyData.getOtherAntPositions(colonyData.getQueenPosition())) {
-                    g.drawImage(this.GATHERER.getScaledInstance(32, 32, 0), antPosition.x * stepX, antPosition.y * stepY, null);
+                    g.drawImage(this.GATHERER, antPosition.x * stepX, antPosition.y * stepY, null);
                 }
             }
         }

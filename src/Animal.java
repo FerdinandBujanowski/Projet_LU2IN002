@@ -7,7 +7,7 @@ public abstract class Animal {
     protected int currentHealth;
 
     private int x, y, z;
-    private Direction currentDirection;
+    protected Direction currentDirection;
 
     public Animal(int x, int y) {
         this.x = x;

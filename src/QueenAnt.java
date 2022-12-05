@@ -11,7 +11,7 @@ public class QueenAnt extends Ant {
     public void tick(Terrain terrain, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
         super.tick(terrain, barriers, predators, colonyData);
 
-        if(this.currentEnergy > Simulation.EGG_COST) {
+        if(this.currentEnergy > Simulation.EGG_COST && colonyData.getOtherAntPositions(this.getPosition()).size() < (Simulation.MAX_ANTS - 1)) {
             this.currentEnergy -= Simulation.EGG_COST;
             Point freePosition = this.getFreePoint(this.getPosition(), barriers, predators, colonyData);
             if(freePosition != null) {
@@ -21,8 +21,13 @@ public class QueenAnt extends Ant {
         if(Simulation.iteration % 2 == 0) {
             Point freePosition = this.getFreePoint(this.getPosition(), barriers, predators, colonyData);
             if(freePosition != null) {
+
+                Point oldPosition = this.getPosition();
                 Point vector = new Point(freePosition.x - this.getX(), freePosition.y - this.getY());
-                this.tryMoveAlongVector(vector, barriers, predators, colonyData);
+                if(this.tryMoveAlongVector(vector, barriers, predators, colonyData)) {
+                    Point directionVector = new Point(this.getX() - oldPosition.x, this.getY() - oldPosition.y);
+                    this.currentDirection = Direction.getDirection(directionVector);
+                }
             }
         }
     }

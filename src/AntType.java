@@ -1,6 +1,6 @@
 public enum AntType {
 
-    QUEEN_ANT(100, 1000),
+    QUEEN_ANT(200, 1000),
     GATHERER_ANT(60, 20),
     WARRIOR_ANT(100, 50);
 

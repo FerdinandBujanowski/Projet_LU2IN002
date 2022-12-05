@@ -1,8 +1,8 @@
 public class Berry extends Ressource {
 
     private boolean isFermented;
-    public static final double p_ferment = 0.02;
-    public static final double p_spawn = 0.002;
+    public static final double p_ferment = 0.05;
+    public static final double p_spawn = 0.001;
 
     public Berry() {
         super("berry", 20);
@@ -11,5 +11,8 @@ public class Berry extends Ressource {
 
     public void ferment() {
         if(Math.random() <= p_ferment) this.isFermented = true;
+    }
+    public boolean isFermented() {
+        return this.isFermented;
     }
 }

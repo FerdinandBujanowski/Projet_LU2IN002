@@ -5,8 +5,9 @@ public class Simulation {
     public static long iteration = 0;
 
     public static final int QUEEN_X = 0, QUEEN_Y = 0;
-    public static final int MAX_RESSOURCES = 35;
-    public static final int EGG_COST = 50;
+    public static final int MAX_RESSOURCES = 20;
+    public static final int MAX_ANTS = 20;
+    public static final int EGG_COST = 100;
 
     private final Colony colony;
     public final Terrain terrain;
