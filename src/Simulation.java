@@ -7,6 +7,7 @@ public class Simulation {
     public static final int QUEEN_X = 0, QUEEN_Y = 0;
     public static final int MAX_RESSOURCES = 20;
     public static final int MAX_ANTS = 20;
+    public static final int MAX_PREDATORS = 5;
     public static final int EGG_COST = 100;
 
     private final Colony colony;
@@ -61,20 +62,20 @@ public class Simulation {
             }
         }
 
-        //tick every ant
+        //2) rafraichir chaque fourmi
         this.colony.tick(this.terrain, this.barriers, this.predators);
 
         //generate predators
-        if (Math.random() <= 0.01){ //To do: define as global variable?
-            int randX=(int) (Math.random()*Terrain.NBLIGNESMAX);
-            int randY=(int) (Math.random()*Terrain.NBCOLONNESMAX);
-            Predator p=new Predator(randX, randY);
+        if (Math.random() <= Predator.p_spawn && this.predators.size() < Simulation.MAX_PREDATORS) {
+            int randX = (int)(Math.random() * this.terrain.nbLignes);
+            int randY = (int)(Math.random() * this.terrain.nbColonnes);
+            Predator p = new Predator(randX, randY);
             this.predators.add(p);
         }
         //tick every predator 
-        for (Predator p: this.predators){
+        for(Predator p : this.predators) {
             p.tick(null, this.barriers, this.predators, this.colony);
-            if (p.currentHealth<=0){
+            if (p.currentHealth <= 0) {
                 this.deadPredators.add(p);
             }
         }

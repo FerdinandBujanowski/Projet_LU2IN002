@@ -3,6 +3,8 @@ import java.util.ArrayList;
 
 public class Predator extends Animal {
 
+    public static final double p_spawn = 0.01;
+
     public Predator(int x, int y) {
         super(x, y);
         this.currentHealth=20;
