@@ -10,15 +10,18 @@ public class GathererAnt extends Ant {
     @Override
     public void tick(Terrain terrain, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
         super.tick(terrain, barriers, predators, colonyData);
-        if(this.predatorInProximity) {
-            // run away from predator
-            assert this.closestPredatorPosition != null;
-            Point vectorToPredator = new Point(this.closestPredatorPosition.x - this.getX(), this.closestPredatorPosition.y - this.getY());
-            //invert vector pointing to predator
-            Point vectorFromPredator = new Point(vectorToPredator.x * -1, vectorToPredator.y * -1);
-            this.tryMoving(vectorFromPredator, barriers, predators, colonyData);
+        if (!predators.isEmpty()){
+            if(this.predatorInProximity) {
+                // run away from predator
+                assert this.closestPredatorPosition != null;
+                Point vectorToPredator = new Point(this.closestPredatorPosition.x - this.getX(), this.closestPredatorPosition.y - this.getY());
+                //invert vector pointing to predator
+                Point vectorFromPredator = new Point(vectorToPredator.x * -1, vectorToPredator.y * -1);
+                this.tryMoving(vectorFromPredator, barriers, predators, colonyData);
 
-        } else {
+            } 
+        }
+        else {
             if(this.getLastInventoryIndex() == this.inventory.length - 1) {
                 //bring food to queen
                 Point queenPosition = colonyData.getQueenPosition();

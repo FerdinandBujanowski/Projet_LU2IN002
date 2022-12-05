@@ -2,7 +2,7 @@ public enum AntType {
 
     QUEEN_ANT(1000, 1000),
     GATHERER_ANT(60, 20),
-    WARRIOR_ANT(100, 50);
+    WARRIOR_ANT(300, 50);
 
     final int maxEnergy, maxHealth;
 
