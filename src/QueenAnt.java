@@ -22,12 +22,8 @@ public class QueenAnt extends Ant {
             Point freePosition = this.getFreePoint(this.getPosition(), barriers, predators, colonyData);
             if(freePosition != null) {
 
-                Point oldPosition = this.getPosition();
                 Point vector = new Point(freePosition.x - this.getX(), freePosition.y - this.getY());
-                if(this.tryMoveAlongVector(vector, barriers, predators, colonyData)) {
-                    Point directionVector = new Point(this.getX() - oldPosition.x, this.getY() - oldPosition.y);
-                    this.currentDirection = Direction.getDirection(directionVector);
-                }
+                this.tryMoving(vector, barriers, predators, colonyData);
             }
         }
     }

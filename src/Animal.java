@@ -88,11 +88,23 @@ public abstract class Animal {
         return Math.abs(this.getX() - otherPosition.x) <= 1 && Math.abs(this.getY() - otherPosition.y) <= 1;
     }
 
-    //Gets animal at position pos
-    public Animal getAnimal(Point position){
-        if (this.getPosition()==position){
-            return this;
+    public void tryMoving(Point vector, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
+        Point oldPosition = this.getPosition();
+        if(this.tryMoveAlongVector(vector, barriers, predators, colonyData)) {
+            //moving succeeded
+            this.calculateMovingCosts();
+        } else {
+            //if movement blocked, move other direction
+            Point freePoint = this.getFreePoint(this.getPosition(), barriers, predators, colonyData);
+            if(freePoint != null) {
+                Point newVector = new Point(freePoint.x - this.getX(), freePoint.y - this.getY());
+                this.tryMoveAlongVector(newVector, barriers, predators, colonyData);
+                this.calculateMovingCosts();
+            }
         }
-        else return null;
+        Point directionVector = new Point(this.getX() - oldPosition.x, this.getY() - oldPosition.y);
+        this.currentDirection = Direction.getDirection(directionVector);
     }
+
+    public void calculateMovingCosts() {}
 }

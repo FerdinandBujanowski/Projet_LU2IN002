@@ -49,24 +49,8 @@ public class GathererAnt extends Ant {
             }
         }
     }
-
-    //TODO put tryMoving() and calculateMovingCosts() into Animal class
-    private void tryMoving(Point vector, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
-        if(this.tryMoveAlongVector(vector, barriers, predators, colonyData)) {
-            //moving succeeded
-            this.calculateMovingCosts();
-        } else {
-            //if movement blocked, move other direction
-            Point freePoint = this.getFreePoint(this.getPosition(), barriers, predators, colonyData);
-            if(freePoint != null) {
-                Point newVector = new Point(freePoint.x - this.getX(), freePoint.y - this.getY());
-                this.tryMoveAlongVector(newVector, barriers, predators, colonyData);
-                this.calculateMovingCosts();
-            }
-        }
-    }
-
-    private void calculateMovingCosts() {
+    @Override
+    public void calculateMovingCosts() {
         if(!this.energyZero) this.currentEnergy--;
         else this.currentHealth--;
     }
