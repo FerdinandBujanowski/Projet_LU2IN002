@@ -25,6 +25,7 @@ public abstract class Ant extends Animal {
         this.currentEnergy = this.antType.maxEnergy;
     }
 
+    @Override
     public void tick(Terrain terrain, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
         this.energyZero = this.currentEnergy == 0;
         this.healthLow = this.currentHealth < 10; //TODO magic number to global constant

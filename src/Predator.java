@@ -31,6 +31,7 @@ public class Predator extends Animal {
         return null;
     }
 
+    @Override
     public void tick(Terrain terrain, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
         //Attacks any ants it's nearby
         for (Point pos: colonyData.getOtherAntPositions(this.getPosition())){

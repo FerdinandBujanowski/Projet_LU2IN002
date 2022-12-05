@@ -40,6 +40,9 @@ public abstract class Animal {
         this.x = newX;
         this.y = newY;
     }
+
+    public abstract void tick(Terrain terrain, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData);
+
     public boolean tryMoveAlongVector(Point vector, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
         int absX = Math.abs(vector.x);
         int absY = Math.abs(vector.y);

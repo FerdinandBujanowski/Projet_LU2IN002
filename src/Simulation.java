@@ -40,7 +40,7 @@ public class Simulation {
     public void tick() {
         iteration++;
 
-        // 1) générer de nouvelles ressources
+        // 1) générer nouvelles ressources
         if(!this.ressourcesMax()) {
             for(int x = 0; x < this.terrain.nbLignes; x++) {
                 for(int y = 0; y < this.terrain.nbColonnes; y++) {
@@ -65,14 +65,14 @@ public class Simulation {
         //2) rafraichir chaque fourmi
         this.colony.tick(this.terrain, this.barriers, this.predators);
 
-        //generate predators
+        //générer prédateurs
         if (Math.random() <= Predator.p_spawn && this.predators.size() < Simulation.MAX_PREDATORS) {
             int randX = (int)(Math.random() * this.terrain.nbLignes);
             int randY = (int)(Math.random() * this.terrain.nbColonnes);
             Predator p = new Predator(randX, randY);
             this.predators.add(p);
         }
-        //tick every predator 
+        //rafraichir chaque prédateur
         for(Predator p : this.predators) {
             p.tick(null, this.barriers, this.predators, this.colony);
             if (p.currentHealth <= 0) {
