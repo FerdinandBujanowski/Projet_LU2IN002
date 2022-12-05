@@ -15,7 +15,8 @@ public class QueenAnt extends Ant {
             this.currentEnergy -= Simulation.EGG_COST;
             Point freePosition = this.getFreePoint(this.getPosition(), barriers, predators, colonyData);
             if(freePosition != null) {
-                colonyData.onSpawnAntRequest(AntType.GATHERER_ANT, freePosition.x, freePosition.y);
+                //colonyData.onSpawnAntRequest(AntType.GATHERER_ANT, freePosition.x, freePosition.y);
+                colonyData.onSpawnAntRequest(AntType.WARRIOR_ANT, freePosition.x, freePosition.y);
             }
         }
         if(Simulation.iteration % 2 == 0) {
