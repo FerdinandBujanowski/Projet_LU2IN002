@@ -49,12 +49,13 @@ class SimulationPanel extends JPanel {
         this.predators = simulation.predators;
 
         try {
-            QUEEN = ImageIO.read(new File("src/images/queen.png")).getScaledInstance(32, 32, 0);
-            WARRIOR = ImageIO.read(new File("src/images/warrior.png")).getScaledInstance(32, 32, 0);
-            GATHERER = ImageIO.read(new File("src/images/worker.png")).getScaledInstance(32, 32, 0);
-            BERRY = ImageIO.read(new File("src/images/berry.png")).getScaledInstance(32, 32, 0);
-            BERRY_FERMENTED = ImageIO.read(new File("src/images/berry_fermented.png")).getScaledInstance(32, 32, 0);
-            GRAIN = ImageIO.read(new File("src/images/grain.png")).getScaledInstance(32, 32, 0);
+            String dir = System.getProperty("user.dir") + File.separator + "src" + File.separator + "images" + File.separator;
+            QUEEN = ImageIO.read(new File(dir + "queen.png")).getScaledInstance(32, 32, 0);
+            WARRIOR = ImageIO.read(new File(dir + "warrior.png")).getScaledInstance(32, 32, 0);
+            GATHERER = ImageIO.read(new File(dir + "gatherer.png")).getScaledInstance(32, 32, 0);
+            BERRY = ImageIO.read(new File(dir + "berry.png")).getScaledInstance(32, 32, 0);
+            BERRY_FERMENTED = ImageIO.read(new File(dir + "berry_fermented.png")).getScaledInstance(32, 32, 0);
+            GRAIN = ImageIO.read(new File(dir + "grain.png")).getScaledInstance(32, 32, 0);
         } catch (IOException e) {
             e.printStackTrace();
         }
