@@ -5,6 +5,7 @@ public abstract class Animal {
 
     protected int currentEnergy;
     protected int currentHealth;
+    protected boolean drunk;
 
     private int x, y, z;
     protected Direction currentDirection;
@@ -13,6 +14,7 @@ public abstract class Animal {
         this.x = x;
         this.y = y;
         this.currentDirection = Direction.UP;
+        this.drunk = false;
     }
 
     public int getCurrentEnergy() {
@@ -93,15 +95,21 @@ public abstract class Animal {
         if(this.tryMoveAlongVector(vector, barriers, predators, colonyData)) {
             //moving succeeded
             this.calculateMovingCosts();
+            this.updateDirection(oldPosition);
         } else {
             //if movement blocked, move other direction
             Point freePoint = this.getFreePoint(this.getPosition(), barriers, predators, colonyData);
             if(freePoint != null) {
                 Point newVector = new Point(freePoint.x - this.getX(), freePoint.y - this.getY());
-                this.tryMoveAlongVector(newVector, barriers, predators, colonyData);
-                this.calculateMovingCosts();
+                if (this.tryMoveAlongVector(newVector, barriers, predators, colonyData)) {
+                    this.calculateMovingCosts();
+                    this.updateDirection(oldPosition);
+                }
             }
         }
+    }
+
+    private void updateDirection(Point oldPosition) {
         Point directionVector = new Point(this.getX() - oldPosition.x, this.getY() - oldPosition.y);
         this.currentDirection = Direction.getDirection(directionVector);
     }

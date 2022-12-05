@@ -39,14 +39,15 @@ public class Predator extends Animal {
         Point posQueen=colonyData.getQueenPosition();
         Point vectorToQueen = new Point(posQueen.x - this.getX(), posQueen.y - this.getY());
 
-        if(!this.tryMoveAlongVector(vectorToQueen, barriers, predators, colonyData)) {
-            //if movement blocked, moves somewhere else
-            Point freePoint = this.getFreePoint(this.getPosition(), barriers, predators, colonyData);
-            if(freePoint != null) {
-                Point newVector = new Point(freePoint.x - this.getX(), freePoint.y - this.getY());
-                this.tryMoveAlongVector(newVector, barriers, predators, colonyData);
-            }
+        if(Simulation.iteration % 2 == 0) {
+            tryMoving(vectorToQueen, barriers, predators, colonyData);
         }
+    }
+
+    public static Direction getPredatorDirection(Point predatorPosition, ArrayList<Predator> predators) {
+        Predator predator = Predator.getPredatorAtPosition(predatorPosition.x, predatorPosition.y, predators);
+        if(predator == null) return Direction.UP;
+        return predator.currentDirection;
     }
 
 }

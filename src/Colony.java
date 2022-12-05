@@ -25,6 +25,13 @@ public class Colony implements ColonyData {
         this.newbornAnts.removeAll(this.newbornAnts);
     }
 
+    private Ant getAntFromPos(Point pos) {
+        for (Ant a: ants){
+            if ((a.getPosition()).equals(pos)) return a;
+        }
+        return null;
+    }
+
     @Override
     public Point getQueenPosition() {
         return new Point(this.queenAnt.getX(), this.queenAnt.getY());
@@ -69,17 +76,26 @@ public class Colony implements ColonyData {
     public int getQueenHealth() {
         return this.queenAnt.currentHealth;
     }
+
     @Override
-    public Ant getAntFromPos(Point pos){
-        for (Ant a: ants){
-            if ((a.getPosition()).equals(pos)) return a;
-        }
-        return null;
+    public void requestDamageAnt(Point pos) {
+        Ant ant = this.getAntFromPos(pos);
+        if (ant == null) return;
+        if (ant instanceof GathererAnt) ant.currentHealth-=100;
+        else ant.currentHealth--;
     }
+
     @Override
-    public void requestDamageAnt(Point pos){
-        if (getAntFromPos(pos)==null) return;
-        else if (getAntFromPos(pos) instanceof GathererAnt) getAntFromPos(pos).currentHealth-=100;
-        else getAntFromPos(pos).currentHealth--;
+    public Direction getAntDirection(Point antPosition) {
+        Ant ant = this.getAntFromPos(antPosition);
+        if(ant == null) return Direction.UP;
+        return ant.currentDirection;
+    }
+
+    @Override
+    public AntType getAntType(Point position) {
+        Ant ant = this.getAntFromPos(position);
+        if(ant == null) return null;
+        return ant.antType;
     }
 }

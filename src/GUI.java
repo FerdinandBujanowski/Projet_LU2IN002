@@ -1,6 +1,9 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,7 +40,8 @@ class SimulationPanel extends JPanel {
     private final ArrayList<Barrier> barriers;
     private final ArrayList<Predator> predators;
 
-    private Image QUEEN, WARRIOR, GATHERER, BERRY, BERRY_FERMENTED, GRAIN;
+    private Image[] QUEEN, WARRIOR, GATHERER, PREDATOR;
+    private Image BERRY, BERRY_FERMENTED, GRAIN;
 
     public SimulationPanel(Simulation simulation, Dimension size) {
         super(null);
@@ -48,18 +52,46 @@ class SimulationPanel extends JPanel {
         this.predators = simulation.predators;
 
         try {
-            String prop=System.getProperty("user.dir");
-            String withSrc= prop.contains("src") ? "" : File.separator + "src";
+            String prop = System.getProperty("user.dir");
+            String withSrc = prop.contains("src") ? "" : File.separator + "src";
             String dir = System.getProperty("user.dir") + withSrc + File.separator + "images" + File.separator;
-            QUEEN = ImageIO.read(new File(dir + "queen.png")).getScaledInstance(32, 32, 0);
-            WARRIOR = ImageIO.read(new File(dir + "warrior.png")).getScaledInstance(32, 32, 0);
-            GATHERER = ImageIO.read(new File(dir + "gatherer.png")).getScaledInstance(32, 32, 0);
-            BERRY = ImageIO.read(new File(dir + "berry.png")).getScaledInstance(32, 32, 0);
-            BERRY_FERMENTED = ImageIO.read(new File(dir + "berry_fermented.png")).getScaledInstance(32, 32, 0);
-            GRAIN = ImageIO.read(new File(dir + "grain.png")).getScaledInstance(32, 32, 0);
+            QUEEN = this.getAllImageRotations(ImageIO.read(new File(dir + "queen.png")));
+            WARRIOR = this.getAllImageRotations(ImageIO.read(new File(dir + "warrior.png")));
+            GATHERER = this.getAllImageRotations(ImageIO.read(new File(dir + "gatherer.png")));
+            PREDATOR = this.getAllImageRotations(ImageIO.read(new File(dir + "predator.png")));
+
+            BERRY = this.getScaledInstance(ImageIO.read(new File(dir + "berry.png")));
+            BERRY_FERMENTED = this.getScaledInstance(ImageIO.read(new File(dir + "berry_fermented.png")));
+            GRAIN = this.getScaledInstance(ImageIO.read(new File(dir + "grain.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private Image[] getAllImageRotations(BufferedImage image) {
+        Image[] images = new Image[4];
+        images[0] = this.getScaledInstance(image);
+        for(int i = 1; i < images.length; i++) {
+            images[i] = this.getScaledInstance(this.rotate(image, i * 90));
+        }
+        return images;
+    }
+
+    private BufferedImage rotate(BufferedImage original, double angle) {
+
+        int w = original.getWidth();
+        int h = original.getHeight();
+
+        BufferedImage rotated = new BufferedImage(w, h, original.getType());
+        Graphics2D graphic = rotated.createGraphics();
+        graphic.rotate(Math.toRadians(angle), w/2., h/2.);
+        graphic.drawImage(original, null, 0, 0);
+        graphic.dispose();
+        return rotated;
+    }
+
+    private Image getScaledInstance(BufferedImage original) {
+        return original.getScaledInstance(GUI.STEP_PIXEL, GUI.STEP_PIXEL, 0);
     }
 
     @Override
@@ -69,15 +101,12 @@ class SimulationPanel extends JPanel {
         int stepX = this.getWidth() / terrain.nbLignes;
         int stepY = this.getHeight() / terrain.nbColonnes;
 
-        g.setColor(Color.GREEN);
+        g.setColor(new Color(45, 96, 40));
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
 
-        Point queenPosition = colonyData.getQueenPosition();
         for(int x = 0; x < terrain.nbLignes; x++) {
             for(int y = 0; y < terrain.nbColonnes; y++) {
-                boolean somethingThere = false;
                 if(!terrain.caseEstVide(x, y)) {
-
                     Ressource ressource = terrain.getCase(x, y);
                     Image currentRessourceImage = GRAIN;
                     assert ressource != null;
@@ -86,21 +115,25 @@ class SimulationPanel extends JPanel {
                         else currentRessourceImage = BERRY;
                     }
                     g.drawImage(currentRessourceImage, x * stepX, y * stepY, null);
-
-                }
-                if(Predator.predatorAtPosition(x, y, predators)) {
-                    somethingThere = true;
-                    g.setColor(Color.BLUE);
-                }
-                else if(Barrier.barrierAt(barriers, x, y)) {
-                    somethingThere = true;
-                    g.setColor(Color.BLACK);
                 }
 
-                if(somethingThere) g.fillRect(x * stepX, y * stepY, stepX, stepY);
-                g.drawImage(this.QUEEN, queenPosition.x * stepX, queenPosition.y * stepY, null);
+                Point queenPosition = colonyData.getQueenPosition();
+                Image queenImage = this.QUEEN[colonyData.getAntDirection(queenPosition).getCorrespondingIndex()];
+                g.drawImage(queenImage, queenPosition.x * stepX, queenPosition.y * stepY, null);
                 for(Point antPosition : colonyData.getOtherAntPositions(colonyData.getQueenPosition())) {
-                    g.drawImage(this.GATHERER, antPosition.x * stepX, antPosition.y * stepY, null);
+                    Image antImage = null;
+                    AntType antType = colonyData.getAntType(antPosition);
+                    assert antType != null;
+                    int index = colonyData.getAntDirection(antPosition).getCorrespondingIndex();
+                    if(antType == AntType.GATHERER_ANT) antImage = this.GATHERER[index];
+                    else if(antType == AntType.WARRIOR_ANT) antImage = this.WARRIOR[index];
+                    if(antImage != null) {
+                        g.drawImage(antImage, antPosition.x * stepX, antPosition.y * stepY, null);
+                    }
+                }
+                for(Point predatorPosition : Predator.getPredatorPositions(predators)) {
+                    int predatorIndex = Predator.getPredatorDirection(predatorPosition, predators).getCorrespondingIndex();
+                    g.drawImage(this.PREDATOR[predatorIndex], predatorPosition.x * stepX, predatorPosition.y * stepY, null);
                 }
             }
         }

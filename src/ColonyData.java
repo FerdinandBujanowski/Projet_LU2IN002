@@ -9,6 +9,7 @@ public interface ColonyData {
     void onFeedQueenRequest(int antId);
     void onSpawnAntRequest(AntType antType, int x, int y);
     int getQueenHealth();
-    Ant getAntFromPos(Point pos);
     void requestDamageAnt(Point pos);
+    Direction getAntDirection(Point antPosition);
+    AntType getAntType(Point position);
 }

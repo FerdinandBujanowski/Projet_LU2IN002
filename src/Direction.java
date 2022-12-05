@@ -13,4 +13,13 @@ public enum Direction {
         else if(lastMovementVector.y == 1) return DOWN;
         else return UP;
     }
+
+    public int getCorrespondingIndex() {
+        return switch (this) {
+            case UP -> 0;
+            case RIGHT -> 1;
+            case DOWN -> 2;
+            case LEFT -> 3;
+        };
+    }
 }
