@@ -72,7 +72,7 @@ public class Colony implements ColonyData {
     @Override
     public Ant getAntFromPos(Point pos){
         for (Ant a: ants){
-            if (a.getPosition()==pos) return a;
+            if ((a.getPosition()).equals(pos)) return a;
         }
         return null;
     }

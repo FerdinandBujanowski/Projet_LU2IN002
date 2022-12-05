@@ -65,7 +65,7 @@ public class Simulation {
         this.colony.tick(this.terrain, this.barriers, this.predators);
 
         //generate predators
-        if (Math.random() <= 0.05){ //To do: define as global variable?
+        if (Math.random() <= 0.01){ //To do: define as global variable?
             int randX=(int) (Math.random()*Terrain.NBLIGNESMAX);
             int randY=(int) (Math.random()*Terrain.NBCOLONNESMAX);
             Predator p=new Predator(randX, randY);

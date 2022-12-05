@@ -1,7 +1,6 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,6 +48,7 @@ class SimulationPanel extends JPanel {
         this.predators = simulation.predators;
 
         try {
+<<<<<<< Updated upstream
             String dir = System.getProperty("user.dir") + File.separator + "src" + File.separator + "images" + File.separator;
             QUEEN = ImageIO.read(new File(dir + "queen.png")).getScaledInstance(32, 32, 0);
             WARRIOR = ImageIO.read(new File(dir + "warrior.png")).getScaledInstance(32, 32, 0);
@@ -56,6 +56,14 @@ class SimulationPanel extends JPanel {
             BERRY = ImageIO.read(new File(dir + "berry.png")).getScaledInstance(32, 32, 0);
             BERRY_FERMENTED = ImageIO.read(new File(dir + "berry_fermented.png")).getScaledInstance(32, 32, 0);
             GRAIN = ImageIO.read(new File(dir + "grain.png")).getScaledInstance(32, 32, 0);
+=======
+            QUEEN = ImageIO.read(new File("/Users/danielpanariti/Documents/GitHub/Projet_LU2IN002/src/images/queen.png")).getScaledInstance(32, 32, 0);
+            WARRIOR = ImageIO.read(new File("/Users/danielpanariti/Documents/GitHub/Projet_LU2IN002/src/images/warrior.png")).getScaledInstance(32, 32, 0);
+            GATHERER = ImageIO.read(new File("/Users/danielpanariti/Documents/GitHub/Projet_LU2IN002/src/images/worker.png")).getScaledInstance(32, 32, 0);
+            BERRY = ImageIO.read(new File("/Users/danielpanariti/Documents/GitHub/Projet_LU2IN002/src/images/berry.png")).getScaledInstance(32, 32, 0);
+            BERRY_FERMENTED = ImageIO.read(new File("/Users/danielpanariti/Documents/GitHub/Projet_LU2IN002/src/images/berry_fermented.png")).getScaledInstance(32, 32, 0);
+            GRAIN = ImageIO.read(new File("/Users/danielpanariti/Documents/GitHub/Projet_LU2IN002/src/images/grain.png")).getScaledInstance(32, 32, 0);
+>>>>>>> Stashed changes
         } catch (IOException e) {
             e.printStackTrace();
         }
