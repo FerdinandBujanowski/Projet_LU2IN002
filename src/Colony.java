@@ -7,6 +7,8 @@ public class Colony implements ColonyData {
     private final ArrayList<Ant> ants;
     private final ArrayList<Ant> newbornAnts;
 
+    public static double pWarriorSpawn=0.4;
+
     public Colony() {
         this.queenAnt = (QueenAnt) AntType.QUEEN_ANT.createNewInstance(0, 0);
         this.ants = new ArrayList<>();

@@ -11,12 +11,14 @@ public class WarriorAnt extends Ant {
     public void tick(Terrain terrain, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
         super.tick(terrain, barriers, predators, colonyData);
         //Moves randomly if no predators in terrain // or not nearby
-        if(predators.isEmpty() || !this.predatorInProximity) {
+        if(predators.isEmpty() || !this.predatorInProximity){
             int randX=(int) (Math.random()*Terrain.NBLIGNESMAX);
             int randY=(int) (Math.random()*Terrain.NBCOLONNESMAX);
             Point vectorSomewhereRandom = new Point(randX - this.getX(), randY - this.getY());
             this.tryMoving(vectorSomewhereRandom, barriers, predators, colonyData);
-
+            
+            //Loses energy whenever its not actively attacking 
+            this.calculateMovingCosts();
         }
         else{
             //Predators exist
@@ -33,7 +35,8 @@ public class WarriorAnt extends Ant {
     }
     @Override
     public void calculateMovingCosts() {
-
+        if(!this.energyZero) this.currentEnergy--;
+        else this.currentHealth--;
     }
 
 }
