@@ -7,7 +7,7 @@ public class Colony implements ColonyData {
     private final ArrayList<Ant> ants;
     private final ArrayList<Ant> newbornAnts;
 
-    public static double pWarriorSpawn=0.4;
+    public static double pWarriorSpawn = 0.4;
 
     public Colony() {
         this.queenAnt = (QueenAnt) AntType.QUEEN_ANT.createNewInstance(0, 0);
@@ -49,23 +49,12 @@ public class Colony implements ColonyData {
     }
 
     @Override
-    public boolean antAtPosition(int x, int y) {
-        for(Ant ant : this.ants) {
-            if(ant.getX() == x && ant.getY() == y) return true;
-        }
-        return false;
-    }
-
-    @Override
     public void onFeedQueenRequest(int antId) {
         for(Ant ant : this.ants) {
             if(ant.id == antId) {
                 if(ant.inventory[ant.getLastInventoryIndex()] != null) {
                     Ressource currentRessource = ant.inventory[ant.getLastInventoryIndex()];
-                    this.queenAnt.currentEnergy += currentRessource.getQuantite();
-                    if(currentRessource instanceof Berry && ((Berry) currentRessource).isFermented()) {
-                        this.queenAnt.drunkCooldown += Berry.DRUNK_TICKS;
-                    }
+                    this.queenAnt.eat(currentRessource);
                     ant.inventory[ant.getLastInventoryIndex()] = null;
                 }
             }
@@ -102,5 +91,14 @@ public class Colony implements ColonyData {
         Ant ant = this.getAntFromPos(position);
         if(ant == null) return null;
         return ant.antType;
+    }
+
+    @Override
+    public int getGathererCount() {
+        int counter = 0;
+        for(Ant ant : this.ants) {
+            if(ant instanceof GathererAnt) counter++;
+        }
+        return counter;
     }
 }

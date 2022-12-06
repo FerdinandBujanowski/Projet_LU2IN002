@@ -94,6 +94,7 @@ public abstract class Animal {
     }
 
     public boolean touches(Point otherPosition) {
+        if(otherPosition == null) return false;
         return Math.abs(this.getX() - otherPosition.x) <= 1 && Math.abs(this.getY() - otherPosition.y) <= 1;
     }
 

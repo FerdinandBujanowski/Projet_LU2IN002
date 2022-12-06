@@ -1,6 +1,5 @@
 /**
  * @author Ferdinand Bujanowski et Daniel Panariti (LU2IN002 2022oct)
- * Gestion d'un terrain
  */
 
 public class TestTerrain {
@@ -19,7 +18,6 @@ public class TestTerrain {
 				e.printStackTrace();
 			}
 		}
-		gui.dispose();
-		simulation.terrain.affiche(2);
+		//gui.dispose();
 	}
 }

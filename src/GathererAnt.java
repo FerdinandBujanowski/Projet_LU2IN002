@@ -10,6 +10,7 @@ public class GathererAnt extends Ant {
     @Override
     public void tick(Terrain terrain, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
         super.tick(terrain, barriers, predators, colonyData);
+
         if (this.predatorInProximity && this.closestPredatorPosition != null) {
             // run away from predator
             Point vectorToPredator = new Point(this.closestPredatorPosition.x - this.getX(), this.closestPredatorPosition.y - this.getY());
@@ -42,12 +43,7 @@ public class GathererAnt extends Ant {
             if(this.energyZero) {
                 //if food equipped eat food
                 if(this.getLastInventoryIndex() > -1) {
-                    this.currentEnergy += this.inventory[this.getLastInventoryIndex()].getQuantite();
-                    if(this.inventory[this.getLastInventoryIndex()] instanceof Berry) {
-                        if(((Berry) this.inventory[this.getLastInventoryIndex()]).isFermented()) {
-                            this.drunkCooldown += Berry.DRUNK_TICKS;
-                        }
-                    }
+                    this.eat(this.inventory[this.getLastInventoryIndex()]);
                     this.inventory[this.getLastInventoryIndex()] = null;
                 }
             }

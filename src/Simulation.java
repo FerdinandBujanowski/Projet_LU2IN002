@@ -9,6 +9,7 @@ public class Simulation {
     public static final int MAX_ANTS = 20;
     public static final int MAX_PREDATORS = 5;
     public static final int EGG_COST = 100;
+    public static final int PROXIMITY = 15;
 
     private final Colony colony;
     public final Terrain terrain;

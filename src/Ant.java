@@ -13,6 +13,7 @@ public abstract class Ant extends Animal {
     protected Point closestRessourcePosition;
     protected Point closestPredatorPosition;
     protected boolean predatorInProximity;
+    protected boolean queenInProximity;
 
     protected final AntType antType;
 
@@ -31,14 +32,23 @@ public abstract class Ant extends Animal {
         this.energyZero = this.currentEnergy == 0;
         this.healthLow = this.currentHealth < 10; //TODO magic number to global constant
 
+        Point queenPosition = colonyData.getQueenPosition();
+        assert queenPosition != null;
+        this.queenInProximity = this.distance(queenPosition.x - this.getX(), queenPosition.y - this.getY()) <= Simulation.PROXIMITY;
+
         this.closestPredatorPosition = this.updateClosestPredatorPosition(predators);
         if(this.closestPredatorPosition != null) {
-            this.predatorInProximity = this.distance(this.closestPredatorPosition.x, this.closestPredatorPosition.y) < 10; //TODO magic number to global constant
-        }
+            this.predatorInProximity = this.distance(this.closestPredatorPosition.x, this.closestPredatorPosition.y) <= Simulation.PROXIMITY; //TODO magic number to global constant
+        } else this.predatorInProximity = false;
 
         this.closestRessourcePosition = this.updateClosestRessourcePosition(terrain);
 
         if(this.drunkCooldown > 0) this.drunkCooldown--;
+    }
+
+    protected void eat(Ressource ressource) {
+        this.currentEnergy += ressource.getQuantite();
+        if(ressource instanceof Berry && ((Berry)ressource).isFermented()) this.drunkCooldown += Berry.DRUNK_TICKS;
     }
 
     private Point updateClosestPredatorPosition(ArrayList<Predator> predators) {

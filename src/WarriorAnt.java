@@ -10,34 +10,36 @@ public class WarriorAnt extends Ant {
     @Override
     public void tick(Terrain terrain, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
         super.tick(terrain, barriers, predators, colonyData);
-        //Moves randomly if no predators in terrain // or not nearby
-        if(predators.isEmpty() || !this.predatorInProximity){
-            int randX=(int) (Math.random()*Terrain.NBLIGNESMAX);
-            int randY=(int) (Math.random()*Terrain.NBCOLONNESMAX);
-            Point vectorSomewhereRandom = new Point(randX - this.getX(), randY - this.getY());
-            this.tryMoving(vectorSomewhereRandom, barriers, predators, colonyData);
-            
-            //Loses energy whenever its not actively attacking 
-            this.calculateMovingCosts();
-        }
-        else{
-            //Predators exist
-            if(this.touches(closestPredatorPosition)) {
-                //Attacks predator
-                Predator.getPredatorAtPosition(closestPredatorPosition.x, closestPredatorPosition.y, predators).currentHealth--;
-            }
-            else{
-                //If predator not nearby
-                Point predPosition=closestPredatorPosition;
-                this.tryMoving(predPosition, barriers, predators, colonyData);
-            }
-        }
-    }
-    @Override
-    public void calculateMovingCosts() {
-        if(!this.energyZero) this.currentEnergy--;
-        else this.currentHealth--;
-    }
 
+        //predator in proximity
+        if(this.predatorInProximity) {
+            if(this.touches(this.closestPredatorPosition)) {
+                //attack predator
+                Predator currentPredator = Predator.getPredatorAtPosition(this.closestPredatorPosition.x, this.closestPredatorPosition.y, predators);
+                assert currentPredator != null;
+                currentPredator.currentHealth--;
+            } else {
+                //walk up to predator
+                Point predatorPosition = this.closestPredatorPosition;
+                Point vectorToPredator = new Point(predatorPosition.x - this.getX(), predatorPosition.y - this.getY());
+                this.tryMoving(vectorToPredator, barriers, predators, colonyData);
+            }
+        }
+        else {
+            Point queenPosition = colonyData.getQueenPosition();
+            Point vectorToQueen = new Point(queenPosition.x - this.getX(), queenPosition.y - this.getY());
+            //warrior close to queen
+            if(this.queenInProximity) {
+                Point invertedVector = new Point(vectorToQueen.x * -1, vectorToQueen.y * -1);
+                this.tryMoving(invertedVector, barriers, predators, colonyData);
+            } else {
+                //walk up to queen
+                this.tryMoving(vectorToQueen, barriers, predators, colonyData);
+            }
+            //lose energy whenever not actively attacking
+            if(!this.energyZero) this.currentEnergy--;
+            else this.currentHealth--;
+        }
+    }
 }
 

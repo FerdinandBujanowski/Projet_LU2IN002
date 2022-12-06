@@ -7,7 +7,7 @@ public class Predator extends Animal {
 
     public Predator(int x, int y) {
         super(x, y);
-        this.currentHealth=20;
+        this.currentHealth = 20;
     }
 
     public static ArrayList<Point> getPredatorPositions(ArrayList<Predator> predators) {
