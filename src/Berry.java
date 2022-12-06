@@ -2,7 +2,7 @@ public class Berry extends Ressource {
 
     private boolean isFermented;
     public static final double p_ferment = 0.05;
-    public static final double p_spawn = 0.001;
+    public static final double p_spawn = 0.001; 
     public static final int DRUNK_TICKS = 10;
 
     public Berry() {
