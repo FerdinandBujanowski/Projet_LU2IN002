@@ -5,8 +5,9 @@ public abstract class Animal {
 
     protected int currentEnergy;
     protected int currentHealth;
+    protected int drunkCooldown;
 
-    private int x, y, z;
+    private int x, y;
     protected Direction currentDirection;
 
     public Animal(int x, int y) {
@@ -42,11 +43,6 @@ public abstract class Animal {
     public abstract void tick(Terrain terrain, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData);
 
     public boolean tryMoveAlongVector(Point vector, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
-        if(this instanceof Ant) {
-            if(((Ant)this).drunkCooldown > 0) {
-                vector.setLocation(vector.x * -1, vector.y * -1);
-            }
-        }
 
         int absX = Math.abs(vector.x);
         int absY = Math.abs(vector.y);
@@ -99,6 +95,10 @@ public abstract class Animal {
     }
 
     public void tryMoving(Point vector, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
+        if((this).drunkCooldown > 0) {
+            vector.setLocation(vector.x * -1, vector.y * -1);
+        }
+
         Point oldPosition = this.getPosition();
         if(this.tryMoveAlongVector(vector, barriers, predators, colonyData)) {
             //moving succeeded

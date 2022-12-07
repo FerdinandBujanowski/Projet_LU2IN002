@@ -2,14 +2,12 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class GathererAnt extends Ant {
-    private Boolean isDrunk=false;
-    private int drunkTicks=10;
+
     public GathererAnt(int x, int y, AntType antType) {
         super(x, y, antType);
     }
 
     @Override
-    /* 
     public void tick(Terrain terrain, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
         super.tick(terrain, barriers, predators, colonyData);
 
@@ -50,8 +48,9 @@ public class GathererAnt extends Ant {
                 }
             }
         }
-    }*/
-    
+    }
+
+    /*
     public void tick(Terrain terrain, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
         super.tick(terrain, barriers, predators, colonyData);
 
@@ -115,11 +114,14 @@ public class GathererAnt extends Ant {
             this.tryMoving(vectorToDest, barriers, predators, colonyData);
         }
     }
+     */
     @Override
     public void calculateMovingCosts() {
         if(!this.energyZero) this.currentEnergy--;
         else this.currentHealth--;
     }
+
+    /*
     public void staysDrunk(){
         if (drunkTicks<=0){
             isDrunk=false;
@@ -127,4 +129,5 @@ public class GathererAnt extends Ant {
         }
         else drunkTicks--;
     }
+     */
 }

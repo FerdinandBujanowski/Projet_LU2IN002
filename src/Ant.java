@@ -7,7 +7,6 @@ public abstract class Ant extends Animal {
     public final int id;
 
     protected Ressource[] inventory;
-    protected int drunkCooldown;
 
     protected boolean energyZero, healthLow;
     protected Point closestRessourcePosition;
@@ -48,7 +47,10 @@ public abstract class Ant extends Animal {
 
     protected void eat(Ressource ressource) {
         this.currentEnergy += ressource.getQuantite();
-        if(ressource instanceof Berry && ((Berry)ressource).isFermented()) this.drunkCooldown += Berry.DRUNK_TICKS;
+        if(ressource instanceof Berry && ((Berry)ressource).isFermented()) {
+            this.drunkCooldown += Berry.DRUNK_TICKS;
+            System.out.println(this.getClass().toString() + " got drunk!");
+        }
     }
 
     private Point updateClosestPredatorPosition(ArrayList<Predator> predators) {
