@@ -34,7 +34,6 @@ public class QueenAnt extends Ant {
                     Ressource ressource = terrain.videCase(closest.x, closest.y);
                     assert ressource != null;
                     this.eat(ressource);
-                    System.out.println(this.currentEnergy);
                 } else {
                     //walk up to closest ressource
                     Point vectorToRessource = new Point(closest.x - this.getX(), closest.y - this.getY());

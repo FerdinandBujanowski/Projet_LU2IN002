@@ -17,13 +17,6 @@ public class Predator extends Animal {
         }
         return positions;
     }
-
-    public static boolean predatorAtPosition(int x, int y, ArrayList<Predator> predators) {
-        for(Predator predator : predators) {
-            if(predator.getX() == x && predator.getY() == y) return true;
-        }
-        return false;
-    }
     public static Predator getPredatorAtPosition(int x, int y, ArrayList<Predator> predators) {
         for(Predator predator : predators) {
             if(predator.getX() == x && predator.getY() == y) return predator;
@@ -39,7 +32,7 @@ public class Predator extends Animal {
         }
 
         //Moves towards Queen
-        Point posQueen=colonyData.getQueenPosition();
+        Point posQueen = colonyData.getQueenPosition();
         Point vectorToQueen = new Point(posQueen.x - this.getX(), posQueen.y - this.getY());
 
         if(Simulation.iteration % 2 == 0) {

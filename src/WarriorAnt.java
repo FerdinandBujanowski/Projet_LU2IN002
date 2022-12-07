@@ -30,8 +30,9 @@ public class WarriorAnt extends Ant {
             Point vectorToQueen = new Point(queenPosition.x - this.getX(), queenPosition.y - this.getY());
             //warrior close to queen
             if(this.queenInProximity) {
-                Point invertedVector = new Point(vectorToQueen.x * -1, vectorToQueen.y * -1);
-                this.tryMoving(invertedVector, barriers, predators, colonyData);
+                Point randomPoint = new Point((int)(Math.random() * terrain.nbLignes), (int)(Math.random() * terrain.nbColonnes));
+                Point randomVector = new Point(randomPoint.x - this.getX(), randomPoint.y - this.getY());
+                this.tryMoving(randomVector, barriers, predators, colonyData);
             } else {
                 //walk up to queen
                 this.tryMoving(vectorToQueen, barriers, predators, colonyData);
