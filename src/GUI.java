@@ -39,6 +39,7 @@ class SimulationPanel extends JPanel {
     private final Terrain terrain;
     private final ArrayList<Barrier> barriers;
     private final ArrayList<Predator> predators;
+    private final int maxHealth;
 
     private Image[] QUEEN, WARRIOR, GATHERER, PREDATOR;
     private Image BERRY, BERRY_FERMENTED, GRAIN;
@@ -50,6 +51,7 @@ class SimulationPanel extends JPanel {
         this.terrain = simulation.terrain;
         this.barriers = simulation.barriers;
         this.predators = simulation.predators;
+        this.maxHealth = colonyData.getQueenHealth();
 
         try {
             String prop = System.getProperty("user.dir");
@@ -135,6 +137,11 @@ class SimulationPanel extends JPanel {
                     int predatorIndex = Predator.getPredatorDirection(predatorPosition, predators).getCorrespondingIndex();
                     g.drawImage(this.PREDATOR[predatorIndex], predatorPosition.x * stepX, predatorPosition.y * stepY, null);
                 }
+
+                double queenHealth = colonyData.getQueenHealth() / (double)this.maxHealth;
+                g.setColor(Color.RED);
+                Dimension healthBar = new Dimension((int)Math.round(GUI.STEP_PIXEL * queenHealth), 5);
+                g.fillRect(queenPosition.x * stepX, queenPosition.y * stepY - GUI.STEP_PIXEL / 2, healthBar.width, healthBar.height);
             }
         }
     }

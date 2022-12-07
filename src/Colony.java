@@ -76,10 +76,7 @@ public class Colony implements ColonyData {
         Ant ant = this.getAntFromPos(pos);
         if (ant == null) return;
         if (ant instanceof GathererAnt) ant.currentHealth = 0;
-        else {
-            if(ant instanceof QueenAnt) System.out.println(ant.currentHealth);
-            ant.currentHealth--;
-        }
+        else ant.currentHealth--;
     }
 
     @Override
