@@ -62,7 +62,7 @@ public abstract class Animal {
         if(this instanceof Predator) otherPredators.remove((Predator) this);
         for(int x = -1; x <= 1; x++) {
             for(int y = -1; y <= 1; y++) {
-                Point newPosition = new Point(currentPosition.x + x, currentPosition.x + y);
+                Point newPosition = new Point(currentPosition.x + x, currentPosition.y + y);
                 if(
                         !Animal.animalBlocking(newPosition, colonyData.getOtherAntPositions(this.getPosition()))
                         && !Animal.animalBlocking(newPosition, Predator.getPredatorPositions(otherPredators))
