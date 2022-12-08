@@ -16,13 +16,6 @@ public abstract class Animal {
         this.currentDirection = Direction.UP;
     }
 
-    public int getCurrentEnergy() {
-        return this.currentEnergy;
-    }
-    public int getCurrentHealth() {
-        return this.currentHealth;
-    }
-
     public int getX() {
         return this.x;
     }
@@ -74,7 +67,7 @@ public abstract class Animal {
                         !Animal.animalBlocking(newPosition, colonyData.getOtherAntPositions(this.getPosition()))
                         && !Animal.animalBlocking(newPosition, Predator.getPredatorPositions(otherPredators))
                         && !Barrier.barrierAt(barriers, newPosition.x, newPosition.y)
-                        && (newPosition.x != currentPosition.x && newPosition.y != currentPosition.y)
+                        && (newPosition.x != currentPosition.x || newPosition.y != currentPosition.y)
                 ) freePoints.add(newPosition);
             }
         }
@@ -96,7 +89,8 @@ public abstract class Animal {
 
     public void tryMoving(Point vector, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
         if((this).drunkCooldown > 0) {
-            vector.setLocation(vector.x * -1, vector.y * -1);
+            Point randomPoint = this.getFreePoint(this.getPosition(), barriers, predators, colonyData);
+            vector.setLocation(randomPoint.x - this.getX(), randomPoint.y - this.getY());
         }
 
         Point oldPosition = this.getPosition();
