@@ -4,14 +4,20 @@ import java.util.ArrayList;
 public class QueenAnt extends Ant {
 
     /**
-     *
-     * @param antType type de fourmi (guerrier, reine, ouvrière)
-     * Constructuer: construit fourmi de type antType
+     * Constructuer : initialise une fourmi de type
+     * @param antType type de fourmi (toujours AntType.QUEEN_ANT)
      */
     public QueenAnt(int x, int y, AntType antType) {
         super(x, y, antType);
     }
 
+    /**
+     * nouvelle itération : mise à jour de la reine en fonction des paramètres importants
+     * @param terrain le terrain actuel avec toutes les ressources
+     * @param barriers toutes les barrières présentes sur le terrain
+     * @param predators la liste des prédateurs actuellement présents sur le terrain
+     * @param colonyData les données actuelles importantes sur la colonie
+     */
     @Override
     public void tick(Terrain terrain, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
         super.tick(terrain, barriers, predators, colonyData);

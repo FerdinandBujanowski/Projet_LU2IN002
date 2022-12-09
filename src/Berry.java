@@ -6,7 +6,7 @@ public class Berry extends Ressource {
     public static final int DRUNK_TICKS = 10;
 
     /**
-     *
+     * initialise une nouvelle ressource de type 'baie' (qui n'est pas encore fermentée)
      */
     public Berry() {
         super("berry", 20);
@@ -14,14 +14,14 @@ public class Berry extends Ressource {
     }
 
     /**
-     *
+     * avec une certaine probabilité, la baie peut fermenter
      */
     public void ferment() {
         if(Math.random() <= p_ferment) this.isFermented = true;
     }
 
     /**
-     * @return
+     * @return true si la baie est fermentée, rendant la fourmi qui la mange intoxiqué (false sinon)
      */
     public boolean isFermented() {
         return this.isFermented;

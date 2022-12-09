@@ -43,11 +43,11 @@ public class Predator extends Animal implements Cloneable {
     }
 
     /**
-     *
-     * @param terrain
-     * @param barriers
-     * @param predators
-     * @param colonyData
+     * nouvelle itération : mise à jour du prédateur en fonction des paramètres importants
+     * @param terrain le terrain actuel avec toutes les ressources
+     * @param barriers toutes les barrières présentes sur le terrain
+     * @param predators la liste des prédateurs actuellement présents sur le terrain
+     * @param colonyData les données actuelles importantes sur la colonie
      */
     @Override
     public void tick(Terrain terrain, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
@@ -67,8 +67,7 @@ public class Predator extends Animal implements Cloneable {
         }
     }
 
-    /** 
-     *
+    /**
      * @param predatorPosition la position du predateur cherché
      * @param predators la liste de tous les predateurs dans la simulation
      * @return la direction du predateur cherché

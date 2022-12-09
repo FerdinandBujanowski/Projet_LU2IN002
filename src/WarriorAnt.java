@@ -3,22 +3,22 @@ import java.util.ArrayList;
 
 public class WarriorAnt extends Ant {
 
-    /** Constructeur: construit la fourmi de type guerrière
+    /** Constructeur : construit la fourmi de type guerrière
      *
-     * @param x la position sur l'axe de coordonées
-     * @param y la position sur l'axe de oordonées
-     * @param antType le type de fourmi
+     * @param x la position initiale - x
+     * @param y la position initiale - y
+     * @param antType le type de fourmi (toujours AntType.WARRIOR_ANT)
      */
     public WarriorAnt(int x, int y, AntType antType) {
         super(x, y, antType);
     }
 
     /**
-     *
-     * @param terrain
-     * @param barriers
-     * @param predators
-     * @param colonyData
+     * nouvelle itération : mise à jour de la guerrière en fonction des paramètres importants
+     * @param terrain le terrain actuel avec toutes les ressources
+     * @param barriers toutes les barrières présentes sur le terrain
+     * @param predators la liste des prédateurs actuellement présents sur le terrain
+     * @param colonyData les données actuelles importantes sur la colonie
      */
     @Override
     public void tick(Terrain terrain, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {

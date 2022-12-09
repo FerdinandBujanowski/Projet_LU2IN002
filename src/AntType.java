@@ -14,7 +14,6 @@ public enum AntType {
     /**
      * @param maxEnergy le nombre des points 'énergie' d'un type de fourmi
      * @param maxHealth le nombre des points 'santé' d'un type de fourmi
-
      */
     AntType(int maxEnergy, int maxHealth) {
         this.maxEnergy = maxEnergy;

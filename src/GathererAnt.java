@@ -3,23 +3,22 @@ import java.util.ArrayList;
 
 public class GathererAnt extends Ant {
 
-    /** 
-     *
-     * @param x la position sur l'axe de coordonées
-     * @param y la position sur l'axe de oordonées
-     * @param antType le type de fourmi
-     * Constructeur: construit une fourmi de type ouvrière
+    /**
+     * Constructeur : construit une fourmi de type ouvrière
+     * @param x la position initiale - x
+     * @param y la position initiale - y
+     * @param antType le type de fourmi (toujours AntType.GATHERER_ANT)
      */
     public GathererAnt(int x, int y, AntType antType) {
         super(x, y, antType);
     }
 
     /**
-     *
-     * @param terrain
-     * @param barriers
-     * @param predators
-     * @param colonyData
+     * nouvelle itération : mise à jour de l'ouvrière en fonction des paramètres importants
+     * @param terrain le terrain actuel avec toutes les ressources
+     * @param barriers toutes les barrières présentes sur le terrain
+     * @param predators la liste des prédateurs actuellement présents sur le terrain
+     * @param colonyData les données actuelles importantes sur la colonie
      */
     @Override
     public void tick(Terrain terrain, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {

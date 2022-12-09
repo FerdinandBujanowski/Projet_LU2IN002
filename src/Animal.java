@@ -1,7 +1,8 @@
 import java.awt.*;
 import java.util.ArrayList;
+
 /**
- * La classe représentant un animal
+ * La classe représentant un animal (sous-classes : Ant (y compris tous les sous-classes des fourmis) et Predator)
  */
 public abstract class Animal {
 
@@ -55,20 +56,19 @@ public abstract class Animal {
 
     /** Fonction qui change l'emplacement de l'animal et changer ses valeurs de x et y
      *
-     * @param newX la nouvelle position sur l'axe de coordonées
-     * @param newY la nouvelle position sur l'axe de oordonées
+     * @param newX la nouvelle position - x
+     * @param newY la nouvelle position - y
      */
     public void seDeplacer(int newX, int newY) {
         this.x = newX;
         this.y = newY;
     }
 
-    /** Fonction qui decrit le fonctionnement d'un animal apres chaque iteration (tick)
-     *
-     * @param terrain
-     * @param barriers
-     * @param predators
-     * @param colonyData
+    /**
+     * nouvelle itération : mise à jour de l'animal en fonction des paramètres importantes
+     * @param terrain le terrain actuel avec toutes les ressources
+     * @param barriers toutes les barrières présentes sur le terrain
+     * @param predators la liste des prédateurs actuellement présents sur le terrain
      */
     public abstract void tick(Terrain terrain, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData);
 
@@ -194,8 +194,8 @@ public abstract class Animal {
         this.currentDirection = Direction.getDirection(directionVector);
     }
 
-    /** Fonction qui fait le calcule des couts de bouger de l'animal
-     *
+    /**
+     * Fonction qui fait le calcule des couts de bouger de l'animal
      */
     public void calculateMovingCosts() {}
 }

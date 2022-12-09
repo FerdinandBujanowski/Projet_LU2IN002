@@ -23,7 +23,7 @@ public class Colony implements ColonyData {
     }
 
     /**
-     * nouvelle itération : mise à jour de toutes les fourmis en fonction des paramètres importantes
+     * nouvelle itération : mise à jour de toutes les fourmis en fonction des paramètres importants
      * @param terrain le terrain actuel avec toutes les ressources
      * @param barriers toutes les barrières présentes sur le terrain
      * @param predators la liste des prédateurs actuellement présents sur le terrain
