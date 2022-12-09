@@ -16,11 +16,12 @@ public abstract class Ant extends Animal {
 
     protected final AntType antType;
 
-    /** Construit une fourmi avec son type (antType) et sa positionnement (valeurs x et y)
+    /** 
      *
-     * @param x
-     * @param y
-     * @param antType
+     * @param x la position sur l'axe de coordonées
+     * @param y la position sur l'axe de oordonées
+     * @param antType type de fourmi (guerrieure, ouvriere, reine)
+     * Constructeur: construit une fourmi avec son type (antType) et sa positionnement (valeurs x et y)
      */
     public Ant(int x, int y, AntType antType) {
         super(x, y);
@@ -58,9 +59,10 @@ public abstract class Ant extends Animal {
         if(this.drunkCooldown > 0) this.drunkCooldown--;
     }
 
-    /** La fourmi consomme la ressource donné en parametre, si c'est un bé fermenté, le temps drunkCooldown (qui decrit le nombre des ticks pour qu'une fourmi ivre) se reinitialise
+    /** 
      *
-     * @param ressource
+     * @param ressource la nourriture pour la fourmi 
+     * La fourmi consomme la ressource donné en parametre, si c'est un bé fermenté, le temps drunkCooldown (qui decrit le nombre des ticks pour qu'une fourmi ivre) se reinitialise
      */
     protected void eat(Ressource ressource) {
         this.currentEnergy += ressource.getQuantite();
@@ -69,10 +71,10 @@ public abstract class Ant extends Animal {
         }
     }
 
-    /** Renvoie la position du predateur le plus proche de l'animale
+    /** 
      *
-     * @param predators
-     * @return
+     * @param predators la liste des prédateurs actuellement présents sur le terrain
+     * @return la position du predateur le plus proche de l'animale
      */
     private Point updateClosestPredatorPosition(ArrayList<Predator> predators) {
         double shortestDistance = -1;
@@ -87,10 +89,10 @@ public abstract class Ant extends Animal {
         return closestPosition;
     }
 
-    /** Renvoie la position de la ressource la plus proche de l'animal
+    /** 
      *
-     * @param terrain
-     * @return
+     * @param terrain le terrain actuel avec toutes les ressources
+     * @return la position de la ressource la plus proche de l'animal
      */
     private Point updateClosestRessourcePosition(Terrain terrain) {
         double shortestDistance = -1;
@@ -109,9 +111,9 @@ public abstract class Ant extends Animal {
         return closestPosition;
     }
 
-    /** Renvoie la derniere ressource mis dans le tableau inventory de l'animal 
+    /** 
      *
-     * @return
+     * @return la derniere ressource mis dans le tableau inventory de l'animal 
      */
     protected int getLastInventoryIndex() {
         int lastIndex = -1;
