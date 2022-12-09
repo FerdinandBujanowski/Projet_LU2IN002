@@ -3,11 +3,12 @@ import java.util.ArrayList;
 
 public class GathererAnt extends Ant {
 
-    /** Constructeur de la fourmi de type GathererAnt
+    /** 
      *
-     * @param x
-     * @param y
-     * @param antType
+     * @param x la position sur l'axe de coordonées
+     * @param y la position sur l'axe de oordonées
+     * @param antType le type de fourmi
+     * Constructeur: construit une fourmi de type ouvrière
      */
     public GathererAnt(int x, int y, AntType antType) {
         super(x, y, antType);
@@ -64,8 +65,8 @@ public class GathererAnt extends Ant {
     }
 
 
-    /** Calcule les couts de bouger de l'animal
-     *
+    /** 
+     * Fonction qui fait le calcule des couts de bouger de l'animal
      */
     @Override
     public void calculateMovingCosts() {

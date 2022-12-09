@@ -3,11 +3,11 @@ import java.util.ArrayList;
 
 public class WarriorAnt extends Ant {
 
-    /** Constructeur de la fourmi de type WarriorAnt
+    /** Constructeur: construit la fourmi de type guerrière
      *
-     * @param x
-     * @param y
-     * @param antType
+     * @param x la position sur l'axe de coordonées
+     * @param y la position sur l'axe de oordonées
+     * @param antType le type de fourmi
      */
     public WarriorAnt(int x, int y, AntType antType) {
         super(x, y, antType);

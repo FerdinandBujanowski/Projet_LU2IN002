@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.util.ArrayList;
-
+/**
+ * La classe représentant un animal
+ */
 public abstract class Animal {
 
     protected int currentEnergy;
@@ -11,9 +13,9 @@ public abstract class Animal {
     protected Direction currentDirection;
 
     /**
-     * Constructeur de la classe, initialisant les valeurs x et y (leur emplacement), et leur direction
-     * @param x
-     * @param y
+     * Constructeur: initialisant les valeurs x et y (leur emplacement), et leur direction
+     * @param x la position sur l'axe de coordonées
+     * @param y la position sur l'axe de oordonées
      */
     public Animal(int x, int y) {
         this.x = x;
@@ -21,40 +23,40 @@ public abstract class Animal {
         this.currentDirection = Direction.UP;
     }
 
-    /** Renvoie la valeur de x associé a l'animal 
-     * @return
+    /** 
+     * @return la valeur de x associé a l'animal 
      */
     public int getX() {
         return this.x;
     }
 
-    /** Renvoie la valeur de y associé a l'animal 
-     * @return
+    /** 
+     * @return la valeur de y associé a l'animal 
      */
     public int getY() {
         return this.y;
     }
 
-    /** Renvoie la position (type Point) de l'animal
-     * @return
+    /** 
+     * @return la position (type Point) de l'animal
      */
     public Point getPosition() {
         return new Point(this.x, this.y);
     }
 
-    /** Renovie la distance d'un animal a un autre
-     * @param x
-     * @param y
-     * @return
+    /** 
+     * @param x la position sur l'axe de coordonées
+     * @param y la position sur l'axe de oordonées
+     * @return la distance d'un animal a un autre
      */
     public double distance(int x, int y) {
         return Math.sqrt(Math.pow(x - this.x, 2) + Math.pow(y - this.y, 2));
     }
 
-    /** Change l'emplacement de l'animal et changer ses valeurs de x et y
+    /** Fonction qui change l'emplacement de l'animal et changer ses valeurs de x et y
      *
-     * @param newX
-     * @param newY
+     * @param newX la nouvelle position sur l'axe de coordonées
+     * @param newY la nouvelle position sur l'axe de oordonées
      */
     public void seDeplacer(int newX, int newY) {
         this.x = newX;
@@ -71,13 +73,13 @@ public abstract class Animal {
     public abstract void tick(Terrain terrain, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData);
 
 
-    /** Fonction qui renvoie true si l'animal peut se deplacer vers le vecteur mis en parametre, et faux s'il ne peut pas.
+    /** 
      *
-     * @param vector
-     * @param barriers
-     * @param predators
-     * @param colonyData
-     * @return
+     * @param vector point qui decrit la direction que l'animal va essayer de suivre
+     * @param barriers toutes les barrières présentes sur le terrain
+     * @param predators la liste des prédateurs actuellement présents sur le terrain
+     * @param colonyData la colonie contenant toutes les fourmis dans la simulation
+     * @return true si l'animal peut se deplacer vers le vecteur mis en parametre, et false s'il ne peut pas.
      */
     public boolean tryMoveAlongVector(Point vector, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
 
@@ -99,13 +101,13 @@ public abstract class Animal {
         return true;
     }
 
-    /** Renvoie une localisation disponible en relation de la position actuelle, en prenant en compte les localisations que les animaux occupent.
+    /** 
      *
-     * @param currentPosition
-     * @param barriers
-     * @param predators
-     * @param colonyData
-     * @return
+     * @param currentPosition la position actuelle de l'animal
+     * @param barriers toutes les barrières présentes sur le terrain
+     * @param predators la liste des prédateurs actuellement présents sur le terrain
+     * @param colonyData la colonie contenant toutes les fourmis dans la simulation
+     * @return  une localisation disponible en relation de la position actuelle, en prenant en compte les localisations que les animaux occupent.
      */
     public Point getFreePoint(Point currentPosition, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
         ArrayList<Point> freePoints = new ArrayList<>();
@@ -127,11 +129,11 @@ public abstract class Animal {
         else return freePoints.get((int)(Math.random() * freePoints.size()));
     }
 
-    /** Fonction boolean qui renvoie si un animal occuper la position newPosition ou pas. 
+    /** 
      *
-     * @param newPosition
-     * @param otherPositions
-     * @return
+     * @param newPosition la nouvelle position
+     * @param otherPositions la liste contenant les autres positions possible
+     * @return true si un animal occuper la position newPosition, false sinon
      */
     private static boolean animalBlocking(Point newPosition, ArrayList<Point> otherPositions) {
         for(Point position : otherPositions) {
@@ -140,22 +142,23 @@ public abstract class Animal {
         return false;
     }
 
-    /** Fonction boolean qui renvoie si l'animal touch un autre position ou pas. 
+    /** 
      *
-     * @param otherPosition
-     * @return
+     * @param otherPosition l'autre position mise en compairaison 
+     * @return true si l'animal 'touche' un autre position, false sinon
      */
     public boolean touches(Point otherPosition) {
         if(otherPosition == null) return false;
         return Math.abs(this.getX() - otherPosition.x) <= 1 && Math.abs(this.getY() - otherPosition.y) <= 1;
     }
 
-    /** Fonction qui bouge l'animal vers un vecteur donné, et si c'est bloqué l'animal bouge vers une autre direction
+    /** 
      *
-     * @param vector
-     * @param barriers
-     * @param predators
-     * @param colonyData
+     * @param vector point qui decrit la direction que l'animal va essayer de suivre
+     * @param barriers toutes les barrières présentes sur le terrain
+     * @param predators la liste des prédateurs actuellement présents sur le terrain
+     * @param colonyData la colonie contenant toutes les fourmis dans la simulation
+     * Fonction qui bouge l'animal vers un vecteur donné, et si c'est bloqué l'animal bouge vers une autre direction
      */
     public void tryMoving(Point vector, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
         if((this).drunkCooldown > 0) {
@@ -181,16 +184,17 @@ public abstract class Animal {
         }
     }
 
-    /** Mise à jour de la direction de l'animal
+    /** 
      *
-     * @param oldPosition
+     * @param oldPosition l'ancienne position de l'animal
+     * Fonction qui fait la mise à jour de la direction de l'animal
      */
     private void updateDirection(Point oldPosition) {
         Point directionVector = new Point(this.getX() - oldPosition.x, this.getY() - oldPosition.y);
         this.currentDirection = Direction.getDirection(directionVector);
     }
 
-    /** Calcule les couts de bouger de l'animal
+    /** Fonction qui fait le calcule des couts de bouger de l'animal
      *
      */
     public void calculateMovingCosts() {}
