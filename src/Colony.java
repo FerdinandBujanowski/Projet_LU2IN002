@@ -1,6 +1,9 @@
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * La classe représentant la colonie avec la reine et tous ses fourmies 'guerrières' et 'ouvrières'
+ */
 public class Colony implements ColonyData {
 
     private final QueenAnt queenAnt;
@@ -10,7 +13,7 @@ public class Colony implements ColonyData {
     public static double pWarriorSpawn = 0.4;
 
     /**
-     *
+     * Constructeur : initialise la liste dynamique des fourmis, crée la reine
      */
     public Colony() {
         this.ants = new ArrayList<>();
@@ -20,10 +23,10 @@ public class Colony implements ColonyData {
     }
 
     /**
-     *
-     * @param terrain
-     * @param barriers
-     * @param predators
+     * nouvelle itération : mise à jour de toutes les fourmis en fonction des paramètres importantes
+     * @param terrain le terrain actuel avec toutes les ressources
+     * @param barriers toutes les barrières présentes sur le terrain
+     * @param predators la liste des prédateurs actuellement présents sur le terrain
      */
     public void tick(Terrain terrain, ArrayList<Barrier> barriers, ArrayList<Predator> predators) {
         ArrayList<Ant> deadAnts = new ArrayList<>();
@@ -37,9 +40,8 @@ public class Colony implements ColonyData {
     }
 
     /**
-     *
-     * @param pos
-     * @return
+     * @param pos la position théorique d'une fourmi
+     * @return si elle existe, la fourmi actuellement à cette position
      */
     private Ant getAntFromPos(Point pos) {
         for (Ant a: ants){
@@ -49,8 +51,7 @@ public class Colony implements ColonyData {
     }
 
     /**
-     *
-     * @return
+     * @return la position actuelle de la reine
      */
     @Override
     public Point getQueenPosition() {
@@ -58,9 +59,8 @@ public class Colony implements ColonyData {
     }
 
     /**
-     *
-     * @param self
-     * @return
+     * @param self la position actuelle de la classe fourmi appelant cette fonction
+     * @return une liste des positions actuelles des fourmis sauf celle de la fourmi appelant cette fonction
      */
     @Override
     public ArrayList<Point> getOtherAntPositions(Point self) {
@@ -72,8 +72,8 @@ public class Colony implements ColonyData {
     }
 
     /**
-     *
-     * @param antId
+     * fonction appelée lorsqu'une fourmi essaie de nourrir la reine
+     * @param antId identifiant de la fourmi appelant cette fonction
      */
     @Override
     public void onFeedQueenRequest(int antId) {
@@ -89,10 +89,11 @@ public class Colony implements ColonyData {
     }
 
     /**
-     *
-     * @param antType
-     * @param x
-     * @param y
+     * fonction appelée lorsque la reine essaie de générer une nouvelle fourmi
+     * @param antType le type de la nouvelle fourmi
+     * @param x position de la nouvelle fourmi (x)
+     * @param y position de la nouvelle fourmi (y)
+     * @throws QueenAlreadyExistsException si une nouvelle reine est sur le point d'être créée bien qu'il y ait déjà une reine
      */
     @Override
     public void onSpawnAntRequest(AntType antType, int x, int y) throws QueenAlreadyExistsException {
@@ -101,8 +102,7 @@ public class Colony implements ColonyData {
     }
 
     /**
-     *
-     * @return
+     * @return la valeur entière représentant la santé actuelle de la reine (si 0 alors la reine meurt)
      */
     @Override
     public int getQueenHealth() {
@@ -110,8 +110,8 @@ public class Colony implements ColonyData {
     }
 
     /**
-     *
-     * @param pos
+     * fonction appelée si un prédateur essaie d'attaquer une fourmi
+     * @param pos la position théorique de la fourmi attaquée
      */
     @Override
     public void requestDamageAnt(Point pos) {
@@ -122,9 +122,8 @@ public class Colony implements ColonyData {
     }
 
     /**
-     *
-     * @param antPosition
-     * @return
+     * @param antPosition la position d'une fourmi
+     * @return la direction dans laquelle une fourmi à une certaine position pointe
      */
     @Override
     public Direction getAntDirection(Point antPosition) {
@@ -134,9 +133,8 @@ public class Colony implements ColonyData {
     }
 
     /**
-     *
-     * @param position
-     * @return
+     * @param position la position d'une fourmi
+     * @return le type de la fourmi qui se situe à une position donnée
      */
     @Override
     public AntType getAntType(Point position) {
@@ -146,8 +144,7 @@ public class Colony implements ColonyData {
     }
 
     /**
-     *
-     * @return
+     * @return le nombre des fourmis de type 'ouvrière'
      */
     @Override
     public int getGathererCount() {
