@@ -12,10 +12,11 @@ public enum AntType {
     }
 
     public Ant createNewInstance(int x, int y) {
-        return switch (this) {
-            case QUEEN_ANT -> new QueenAnt(this);
-            case GATHERER_ANT -> new GathererAnt(x, y, this);
-            case WARRIOR_ANT -> new WarriorAnt(x, y, this);
-        };
+        switch (this) {
+            case QUEEN_ANT : return new QueenAnt(this);
+            case GATHERER_ANT : return new GathererAnt(x, y, this);
+            case WARRIOR_ANT : return new WarriorAnt(x, y, this);
+        }
+        return null;
     }
 }

@@ -24,11 +24,12 @@ public enum Direction {
      * @return
      */
     public int getCorrespondingIndex() {
-        return switch (this) {
-            case UP -> 0;
-            case RIGHT -> 1;
-            case DOWN -> 2;
-            case LEFT -> 3;
-        };
+        switch (this) {
+            case UP : return 0;
+            case RIGHT : return 1;
+            case DOWN : return 2;
+            case LEFT : return 3;
+        }
+        return 0;
     }
 }
