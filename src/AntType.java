@@ -8,8 +8,9 @@ public enum AntType {
 
     /**
      *
-     * @param maxEnergy
-     * @param maxHealth
+     * @param maxEnergy l'energie maximale
+     * @param maxHealth la santé maximale
+     * Constructuer: initialise les valeurs de maxHealth et maxEnergy
      */
     AntType(int maxEnergy, int maxHealth) {
         this.maxEnergy = maxEnergy;
@@ -18,9 +19,9 @@ public enum AntType {
 
     /**
      *
-     * @param x
-     * @param y
-     * @return
+     * @param x la position sur l'axe de coordonées
+     * @param y la position sur l'axe de oordonées
+     * @return une nouvelle fourmi
      */
     public Ant createNewInstance(int x, int y) {
         switch (this) {

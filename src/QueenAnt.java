@@ -3,9 +3,10 @@ import java.util.ArrayList;
 
 public class QueenAnt extends Ant {
 
-    /** Constructuer de la fourmi de type antType
+    /**
      *
-     * @param antType
+     * @param antType type de fourmi (guerrier, reine, ouvrière)
+     * Constructuer: construit fourmi de type antType
      */
     public QueenAnt(int x, int y, AntType antType) {
         super(x, y, antType);

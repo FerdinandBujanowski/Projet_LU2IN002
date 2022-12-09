@@ -5,23 +5,21 @@ public class Predator extends Animal implements Cloneable {
 
     public static final double p_spawn = 0.01;
     public static final double p_special_attack=0.2;
-    public Boolean specialPred;
 
-    /** Constructeur de type predateur, initialise sa santé a 20 et son etat de predateur special à false
-     *
-     * @param x
-     * @param y
+    /** 
+     * @param x la position sur l'axe de coordonées du predateur 
+     * @param y la position sur l'axe de oordonées du predateur 
+     * Constructeur: initialise la santé a 20 et son etat de predateur
      */
     public Predator(int x, int y) {
         super(x, y);
         this.currentHealth = 20;
-        this.specialPred=false; 
     }
 
-    /** Renvoie les positions de chaque predator dans l'ArrayList predators
+    /** 
      *
-     * @param predators
-     * @return
+     * @param predators la liste de tous les predateurs dans la simulation
+     * @return les positions de chaque predator dans l'ArrayList predators
      */
     public static ArrayList<Point> getPredatorPositions(ArrayList<Predator> predators) {
         ArrayList<Point> positions = new ArrayList<>();
@@ -31,12 +29,11 @@ public class Predator extends Animal implements Cloneable {
         return positions;
     }
 
-    /** Renvoie le predateur à une position donné s'il est dans l'Arraylist predators
-     *
-     * @param x
-     * @param y
-     * @param predators
-     * @return
+    /** 
+     * @param x la position sur l'axe de coordonées du predateur 
+     * @param y la position sur l'axe de oordonées du predateur 
+     * @param predators la liste de tous les predateurs dans la simulation
+     * @return le predateur à une position donné s'il est dans la liste des predators
      */
     public static Predator getPredatorAtPosition(int x, int y, ArrayList<Predator> predators) {
         for(Predator predator : predators) {
@@ -70,11 +67,11 @@ public class Predator extends Animal implements Cloneable {
         }
     }
 
-    /** Renvoie la direction du predateur
+    /** 
      *
-     * @param predatorPosition
-     * @param predators
-     * @return
+     * @param predatorPosition la position du predateur cherché
+     * @param predators la liste de tous les predateurs dans la simulation
+     * @return la direction du predateur cherché
      */
     public static Direction getPredatorDirection(Point predatorPosition, ArrayList<Predator> predators) {
         Predator predator = Predator.getPredatorAtPosition(predatorPosition.x, predatorPosition.y, predators);
@@ -82,14 +79,13 @@ public class Predator extends Animal implements Cloneable {
         return predator.currentDirection;
     }
     @Override
-    /** Fait un clonage d'un predateur, en initalisant tous les valeurs du clone a ceux du predateur cloné
-     * @return
+    /** 
+     * @return un clone du predateur, en initalisant tous les valeurs du clone a ceux du predateur cloné
      */
     public Predator clone(){
         Predator pred=new Predator(this.getX(),this.getY());
         pred.currentHealth=this.currentHealth;
         pred.currentDirection=this.currentDirection;
-        pred.specialPred=false;
         return pred;
     }
 }

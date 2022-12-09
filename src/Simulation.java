@@ -84,9 +84,6 @@ public class Simulation {
             clone.currentHealth=predators.get(0).currentHealth/2;
             predators.get(0).currentHealth/=2;
 
-            predators.get(0).specialPred=true; 
-            clone.specialPred=true;
-             
             this.predators.add(clone);
         }
         //générer prédateurs
