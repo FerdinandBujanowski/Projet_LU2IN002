@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class QueenAnt extends Ant {
 
-    /**
+    /** Constructuer de la fourmi de type antType
      *
      * @param antType
      */

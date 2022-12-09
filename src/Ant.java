@@ -16,7 +16,7 @@ public abstract class Ant extends Animal {
 
     protected final AntType antType;
 
-    /**
+    /** Construit une fourmi avec son type (antType) et sa positionnement (valeurs x et y)
      *
      * @param x
      * @param y
@@ -58,7 +58,7 @@ public abstract class Ant extends Animal {
         if(this.drunkCooldown > 0) this.drunkCooldown--;
     }
 
-    /**
+    /** La fourmi consomme la ressource donné en parametre, si c'est un bé fermenté, le temps drunkCooldown (qui decrit le nombre des ticks pour qu'une fourmi ivre) se reinitialise
      *
      * @param ressource
      */
@@ -69,7 +69,7 @@ public abstract class Ant extends Animal {
         }
     }
 
-    /**
+    /** Renvoie la position du predateur le plus proche de l'animale
      *
      * @param predators
      * @return
@@ -87,7 +87,7 @@ public abstract class Ant extends Animal {
         return closestPosition;
     }
 
-    /**
+    /** Renvoie la position de la ressource la plus proche de l'animal
      *
      * @param terrain
      * @return
@@ -109,7 +109,7 @@ public abstract class Ant extends Animal {
         return closestPosition;
     }
 
-    /**
+    /** Renvoie la derniere ressource mis dans le tableau inventory de l'animal 
      *
      * @return
      */

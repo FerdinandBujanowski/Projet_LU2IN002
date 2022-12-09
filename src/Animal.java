@@ -11,7 +11,7 @@ public abstract class Animal {
     protected Direction currentDirection;
 
     /**
-     *
+     * Constructeur de la classe, initialisant les valeurs x et y (leur emplacement), et leur direction
      * @param x
      * @param y
      */
@@ -21,28 +21,28 @@ public abstract class Animal {
         this.currentDirection = Direction.UP;
     }
 
-    /**
+    /** Renvoie la valeur de x associé a l'animal 
      * @return
      */
     public int getX() {
         return this.x;
     }
 
-    /**
+    /** Renvoie la valeur de y associé a l'animal 
      * @return
      */
     public int getY() {
         return this.y;
     }
 
-    /**
+    /** Renvoie la position (type Point) de l'animal
      * @return
      */
     public Point getPosition() {
         return new Point(this.x, this.y);
     }
 
-    /**
+    /** Renovie la distance d'un animal a un autre
      * @param x
      * @param y
      * @return
@@ -51,7 +51,7 @@ public abstract class Animal {
         return Math.sqrt(Math.pow(x - this.x, 2) + Math.pow(y - this.y, 2));
     }
 
-    /**
+    /** Change l'emplacement de l'animal et changer ses valeurs de x et y
      *
      * @param newX
      * @param newY
@@ -61,7 +61,7 @@ public abstract class Animal {
         this.y = newY;
     }
 
-    /**
+    /** Fonction qui decrit le fonctionnement d'un animal apres chaque iteration (tick)
      *
      * @param terrain
      * @param barriers
@@ -71,7 +71,7 @@ public abstract class Animal {
     public abstract void tick(Terrain terrain, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData);
 
 
-    /**
+    /** Fonction qui renvoie true si l'animal peut se deplacer vers le vecteur mis en parametre, et faux s'il ne peut pas.
      *
      * @param vector
      * @param barriers
@@ -99,7 +99,7 @@ public abstract class Animal {
         return true;
     }
 
-    /**
+    /** Renvoie une localisation disponible en relation de la position actuelle, en prenant en compte les localisations que les animaux occupent.
      *
      * @param currentPosition
      * @param barriers
@@ -127,7 +127,7 @@ public abstract class Animal {
         else return freePoints.get((int)(Math.random() * freePoints.size()));
     }
 
-    /**
+    /** Fonction boolean qui renvoie si un animal occuper la position newPosition ou pas. 
      *
      * @param newPosition
      * @param otherPositions
@@ -140,7 +140,7 @@ public abstract class Animal {
         return false;
     }
 
-    /**
+    /** Fonction boolean qui renvoie si l'animal touch un autre position ou pas. 
      *
      * @param otherPosition
      * @return
@@ -150,7 +150,7 @@ public abstract class Animal {
         return Math.abs(this.getX() - otherPosition.x) <= 1 && Math.abs(this.getY() - otherPosition.y) <= 1;
     }
 
-    /**
+    /** Fonction qui bouge l'animal vers un vecteur donné, et si c'est bloqué l'animal bouge vers une autre direction
      *
      * @param vector
      * @param barriers
@@ -165,11 +165,11 @@ public abstract class Animal {
 
         Point oldPosition = this.getPosition();
         if(this.tryMoveAlongVector(vector, barriers, predators, colonyData)) {
-            //moving succeeded
+            //tentative de bouger vers le vecteur donné est une reussite ! 
             this.calculateMovingCosts();
             this.updateDirection(oldPosition);
         } else {
-            //if movement blocked, move other direction
+            //si tentative un echec, l'animal bouge vers un autre vecteur
             Point freePoint = this.getFreePoint(this.getPosition(), barriers, predators, colonyData);
             if(freePoint != null) {
                 Point newVector = new Point(freePoint.x - this.getX(), freePoint.y - this.getY());
@@ -181,7 +181,7 @@ public abstract class Animal {
         }
     }
 
-    /**
+    /** Mise à jour de la direction de l'animal
      *
      * @param oldPosition
      */
@@ -190,7 +190,7 @@ public abstract class Animal {
         this.currentDirection = Direction.getDirection(directionVector);
     }
 
-    /**
+    /** Calcule les couts de bouger de l'animal
      *
      */
     public void calculateMovingCosts() {}

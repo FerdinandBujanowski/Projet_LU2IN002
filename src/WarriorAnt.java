@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class WarriorAnt extends Ant {
 
-    /**
+    /** Constructeur de la fourmi de type WarriorAnt
      *
      * @param x
      * @param y

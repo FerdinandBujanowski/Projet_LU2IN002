@@ -5,9 +5,9 @@ public class Predator extends Animal implements Cloneable {
 
     public static final double p_spawn = 0.01;
     public static final double p_special_attack=0.2;
-    public Boolean specialAnt;
+    public Boolean specialPred;
 
-    /**
+    /** Constructeur de type predateur, initialise sa santé a 20 et son etat de predateur special à false
      *
      * @param x
      * @param y
@@ -15,10 +15,10 @@ public class Predator extends Animal implements Cloneable {
     public Predator(int x, int y) {
         super(x, y);
         this.currentHealth = 20;
-        this.specialAnt=false; 
+        this.specialPred=false; 
     }
 
-    /**
+    /** Renvoie les positions de chaque predator dans l'ArrayList predators
      *
      * @param predators
      * @return
@@ -31,7 +31,7 @@ public class Predator extends Animal implements Cloneable {
         return positions;
     }
 
-    /**
+    /** Renvoie le predateur à une position donné s'il est dans l'Arraylist predators
      *
      * @param x
      * @param y
@@ -57,10 +57,7 @@ public class Predator extends Animal implements Cloneable {
         //Attacks any ants it's nearby
         for (Point pos: colonyData.getOtherAntPositions(this.getPosition())){
             if (this.touches(pos)) {
-                if (specialAnt) {
-                    colonyData.requestDamageAntSpecial(pos);
-                }
-                else colonyData.requestDamageAnt(pos);
+                colonyData.requestDamageAnt(pos);
             }
         }
 
@@ -73,7 +70,7 @@ public class Predator extends Animal implements Cloneable {
         }
     }
 
-    /**
+    /** Renvoie la direction du predateur
      *
      * @param predatorPosition
      * @param predators
@@ -85,11 +82,14 @@ public class Predator extends Animal implements Cloneable {
         return predator.currentDirection;
     }
     @Override
+    /** Fait un clonage d'un predateur, en initalisant tous les valeurs du clone a ceux du predateur cloné
+     * @return
+     */
     public Predator clone(){
         Predator pred=new Predator(this.getX(),this.getY());
         pred.currentHealth=this.currentHealth;
         pred.currentDirection=this.currentDirection;
-        pred.specialAnt=false;
+        pred.specialPred=false;
         return pred;
     }
 }

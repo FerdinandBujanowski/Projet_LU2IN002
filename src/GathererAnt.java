@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class GathererAnt extends Ant {
 
-    /**
+    /** Constructeur de la fourmi de type GathererAnt
      *
      * @param x
      * @param y
@@ -64,7 +64,7 @@ public class GathererAnt extends Ant {
     }
 
 
-    /**
+    /** Calcule les couts de bouger de l'animal
      *
      */
     @Override
