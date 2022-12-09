@@ -1,3 +1,8 @@
+/**
+ * Enum utilisée afin d'établir de manière constante les différentes types possibles de fourmi
+ * ainsi que d'initialiser des valeurs différentes pour chaque type
+ *
+ */
 public enum AntType {
 
     QUEEN_ANT(500, 1000),
@@ -7,9 +12,8 @@ public enum AntType {
     final int maxEnergy, maxHealth;
 
     /**
-     *
-     * @param maxEnergy
-     * @param maxHealth
+     * @param maxEnergy le nombre des points 'énergie' d'un type de fourmi
+     * @param maxHealth le nombre des points 'santé' d'un type de fourmi
      */
     AntType(int maxEnergy, int maxHealth) {
         this.maxEnergy = maxEnergy;
@@ -17,10 +21,9 @@ public enum AntType {
     }
 
     /**
-     *
-     * @param x
-     * @param y
-     * @return
+     * @param x position initale - x
+     * @param y position initiale - y
+     * @return une nouvelle instance de fourmi en fonction de son type
      */
     public Ant createNewInstance(int x, int y) {
         switch (this) {

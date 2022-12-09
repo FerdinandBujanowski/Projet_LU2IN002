@@ -1,5 +1,10 @@
 import java.util.ArrayList;
 
+/**
+ * la classe contenant des données sur la colonie, le terrain, les barrières ainsi que les prédateurs :
+ * les mis à jour à chaque itération
+ * également contenant des valeurs numériques constantes utilisées pour gérer les interactions entre les différents éléments
+ */
 public class Simulation {
 
     public static long iteration = 0;
@@ -20,24 +25,24 @@ public class Simulation {
     public final ArrayList<Predator> deadPredators;
 
     /**
-     *
-     * @param lines
-     * @param columns
+     * Constructeur : initialisation du terrain ainsi que des listes dynamiques des éléments de la simulation
+     * @param lines le nombre des lignes du terrain
+     * @param columns le nombre des colonnes du terrain
      */
     public Simulation(int lines, int columns) {
         this.terrain = new Terrain(lines, columns);
         this.colony = new Colony();
 
         this.barriers = new ArrayList<>();
-        this.establishBorders();
+        this.establishBorder();
         this.predators = new ArrayList<>();
         this.deadPredators=new ArrayList<>();
     }
 
     /**
-     *
+     * établit une bordure autour du terrain afin que les entités en mouvement ne puissent pas sortir du cadre de la simulation
      */
-    private void establishBorders() {
+    private void establishBorder() {
         for(int x = -1; x < this.terrain.nbLignes + 1; x++) {
             for(int y = -1; y < this.terrain.nbColonnes + 1; y++) {
                 if(x == -1 || y == -1 || x == this.terrain.nbLignes || y == this.terrain.nbColonnes) {
@@ -48,7 +53,7 @@ public class Simulation {
     }
 
     /**
-     *
+     * nouvelle itération : mise à jour / régénération de tous les éléments sur le terrain
      */
     public void tick() {
         iteration++;
@@ -79,8 +84,8 @@ public class Simulation {
         this.colony.tick(this.terrain, this.barriers, this.predators);
 
         //special attack: predator splits in two if only predator present and predators health greater than 1 
-        if (predators.size()==1 && predators.get(0).currentHealth>1 && Math.random() < Predator.p_special_attack){
-            Predator clone= (Predator)(predators.get(0)).clone();
+        if (predators.size() == 1 && predators.get(0).currentHealth > 1 && Math.random() < Predator.p_special_attack) {
+            Predator clone = (Predator)(predators.get(0)).clone();
             clone.currentHealth=predators.get(0).currentHealth/2;
             predators.get(0).currentHealth/=2;
 
@@ -108,16 +113,14 @@ public class Simulation {
     }
 
     /**
-     *
-     * @return
+     * @return la colonie sous forme de ColonyData (seulement les fonctions donnée par l'interface sont accessibles)
      */
     public ColonyData getAsColonyData() {
         return this.colony;
     }
 
     /**
-     *
-     * @return
+     * @return true s'il y a [MAX_RESSOURCES] ressources déjà sur le terrain, false sinon
      */
     private boolean ressourcesMax() {
         int counter = 0;

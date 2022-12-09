@@ -2,7 +2,9 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
- *
+ * Interface pour faciliter le transfert de données entre les fourmis / prédateurs / le GUI et la colonie
+ * SANS que les différentes classes soient capables de modifier directement les autres fourmies / la reine
+ * implémentée par Colony.java
  */
 public interface ColonyData {
 
