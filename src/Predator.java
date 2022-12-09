@@ -87,13 +87,9 @@ public class Predator extends Animal implements Cloneable {
     @Override
     public Predator clone(){
         Predator pred=new Predator(this.getX(),this.getY());
-        //health splits in half
-        pred.currentHealth=this.currentHealth/2; 
-        this.currentHealth/=2;
+        pred.currentHealth=this.currentHealth;
         pred.currentDirection=this.currentDirection;
-        //they are now special uwu
-        this.specialAnt=true;
-        pred.specialAnt=true;
+        pred.specialAnt=false;
         return pred;
     }
 }
