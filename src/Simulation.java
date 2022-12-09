@@ -66,6 +66,11 @@ public class Simulation {
         //2) rafraichir chaque fourmi
         this.colony.tick(this.terrain, this.barriers, this.predators);
 
+        //special attack: predator splits in two if only predator present
+        if (predators.size()==1 && Math.random() < Predator.p_special_attack){
+            Predator clone= (Predator)(predators.get(0)).clone();
+            this.predators.add(clone);
+        }
         //générer prédateurs
         if (Math.random() <= Predator.p_spawn && this.predators.size() < Simulation.MAX_PREDATORS) {
             int randX = (int)(Math.random() * this.terrain.nbLignes);

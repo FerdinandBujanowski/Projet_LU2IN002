@@ -78,6 +78,14 @@ public class Colony implements ColonyData {
         if (ant instanceof GathererAnt) ant.currentHealth = 0;
         else ant.currentHealth--;
     }
+    @Override
+    public void requestDamageAntSpecial(Point pos) {
+        Ant ant = this.getAntFromPos(pos);
+        if (ant == null) return;
+        if (ant instanceof GathererAnt) ant.currentHealth = 0;
+        if (ant instanceof QueenAnt) ant.currentHealth-=10;
+        else ant.currentHealth-=2;
+    }
 
     @Override
     public Direction getAntDirection(Point antPosition) {

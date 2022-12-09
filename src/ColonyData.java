@@ -9,6 +9,7 @@ public interface ColonyData {
     void onSpawnAntRequest(AntType antType, int x, int y);
     int getQueenHealth();
     void requestDamageAnt(Point pos);
+    void requestDamageAntSpecial(Point pos);
     Direction getAntDirection(Point antPosition);
     AntType getAntType(Point position);
     int getGathererCount();
