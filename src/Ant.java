@@ -16,11 +16,12 @@ public abstract class Ant extends Animal {
 
     protected final AntType antType;
 
-    /** Construit une fourmi avec son type (antType) et sa positionnement (valeurs x et y)
+    /** 
      *
      * @param x la position sur l'axe de coordonées
      * @param y la position sur l'axe de oordonées
      * @param antType type de fourmi (guerrieure, ouvriere, reine)
+     * Constructeur: construit une fourmi avec son type (antType) et sa positionnement (valeurs x et y)
      */
     public Ant(int x, int y, AntType antType) {
         super(x, y);
