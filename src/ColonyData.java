@@ -9,7 +9,7 @@ public interface ColonyData {
     Point getQueenPosition();
     ArrayList<Point> getOtherAntPositions(Point self);
     void onFeedQueenRequest(int antId);
-    void onSpawnAntRequest(AntType antType, int x, int y);
+    void onSpawnAntRequest(AntType antType, int x, int y) throws QueenAlreadyExistsException;
     int getQueenHealth();
     void requestDamageAnt(Point pos);
     void requestDamageAntSpecial(Point pos);
