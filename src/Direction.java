@@ -1,13 +1,16 @@
 import java.awt.*;
 
+/**
+ * Enum représentant une direction qui peut prendre 4 valeurs
+ * utilisée pour traduire les vecteurs de mouvement des éléments qui bougent sur le terrain dans les représentations graphiques correspondantes
+ */
 public enum Direction {
 
     UP, DOWN, LEFT, RIGHT;
 
     /**
-     *
-     * @param lastMovementVector
-     * @return
+     * @param lastMovementVector vecteur de mouvement
+     * @return direction correspondante
      */
     public static Direction getDirection(Point lastMovementVector) {
         //assurer que chaque déplacement est vraiment que d'un seul pixel
@@ -20,8 +23,7 @@ public enum Direction {
     }
 
     /**
-     *
-     * @return
+     * @return un index unique associé à chaque direction - utilisé pour choisir l'image avec la bonne rotation
      */
     public int getCorrespondingIndex() {
         switch (this) {
