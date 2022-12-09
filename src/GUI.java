@@ -6,13 +6,21 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Classe utilisée comme visualisation de la simulation :
+ * Les fourmis / prédateurs ainsi que le terrain sont représentées graphiquement avec des images
+ * Le GUI est mis à jour chaque itération
+ */
 public class GUI extends JFrame {
 
+    /**
+     * constante désignant la longueur graphique d'un cas du terrain (en pixels)
+     */
     public static final int STEP_PIXEL = 32;
 
     /**
-     *
-     * @param simulation
+     * Constructeur : initialise le GUI et crée une fenêtre visible, initialise également la sous-classe 'SimulationPanel'
+     * @param simulation une référence sur la simulation avec toutes ses données actuelles
      */
     public GUI(Simulation simulation) {
         super("Ant Simulation");
@@ -28,7 +36,7 @@ public class GUI extends JFrame {
     }
 
     /**
-     *
+     * positionne la fenêtre crée en fonction de la taille d'écran
      */
     private void setCorrectLocation() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -38,6 +46,9 @@ public class GUI extends JFrame {
     }
 }
 
+/**
+ * classe privée qui dessine chaque itération de la simulation les valeurs graphiques correspondantes dans la fenêtre
+ */
 class SimulationPanel extends JPanel {
 
     private final ColonyData colonyData;
@@ -50,9 +61,9 @@ class SimulationPanel extends JPanel {
     private Image BERRY, BERRY_FERMENTED, GRAIN;
 
     /**
-     *
-     * @param simulation
-     * @param size
+     * Constructeur : tire des données de la simulation, initialise les images utilisées pour représenter graphiquement les données
+     * @param simulation la référence sur la simulation passée par GUI
+     * @param size la taille de la représentation graphique
      */
     public SimulationPanel(Simulation simulation, Dimension size) {
         super(null);
@@ -81,9 +92,9 @@ class SimulationPanel extends JPanel {
     }
 
     /**
-     *
-     * @param image
-     * @return
+     * rotations d'une image
+     * @param image une image de type BufferedImage
+     * @return un tableau contenant les rotations 0°, 90°, 180° et 270° de l'image donnée
      */
     private Image[] getAllImageRotations(BufferedImage image) {
         Image[] images = new Image[4];
@@ -95,10 +106,10 @@ class SimulationPanel extends JPanel {
     }
 
     /**
-     *
-     * @param original
-     * @param angle
-     * @return
+     * fonction privé qui effectue une rotation sur une image donnée
+     * @param original l'image original de type BufferedImage
+     * @param angle l'angle de rotation
+     * @return l'image après la rotation
      */
     private BufferedImage rotate(BufferedImage original, double angle) {
 
@@ -114,17 +125,16 @@ class SimulationPanel extends JPanel {
     }
 
     /**
-     *
-     * @param original
-     * @return
+     * fonction privée qui redimensionne une image à la taille constante (pixels) correspondant à un cas du terrain
+     * @param original l'image original de type BufferedImage
+     * @return l'image après la mise en échelle
      */
     private Image getScaledInstance(BufferedImage original) {
         return original.getScaledInstance(GUI.STEP_PIXEL, GUI.STEP_PIXEL, 0);
     }
 
     /**
-     *
-     * @param g
+     * fonction héritée de JPanel qui dessine des représentations graphiques (couleurs / images) des données de la simulation à chaque itération
      */
     @Override
     public void paintComponent(Graphics g) {
