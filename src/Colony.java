@@ -15,12 +15,8 @@ public class Colony implements ColonyData {
     public Colony() {
         this.ants = new ArrayList<>();
         this.newbornAnts = new ArrayList<>();
-        try {
-            this.onSpawnAntRequest(AntType.QUEEN_ANT, Simulation.QUEEN_X, Simulation.QUEEN_Y);
-        } catch (QueenAlreadyExistsException e) {
-            e.printStackTrace();
-        }
-        this.queenAnt = (QueenAnt) this.ants.get(0);
+        this.queenAnt = (QueenAnt) AntType.QUEEN_ANT.createNewInstance(Simulation.QUEEN_X, Simulation.QUEEN_Y);
+        this.ants.add(this.queenAnt);
     }
 
     /**
