@@ -1,8 +1,6 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +10,10 @@ public class GUI extends JFrame {
 
     public static final int STEP_PIXEL = 32;
 
+    /**
+     *
+     * @param simulation
+     */
     public GUI(Simulation simulation) {
         super("Ant Simulation");
         Terrain terrain = simulation.terrain;
@@ -25,6 +27,9 @@ public class GUI extends JFrame {
         this.setVisible(true);
     }
 
+    /**
+     *
+     */
     private void setCorrectLocation() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int posX = (screenSize.width - this.getWidth()) / 2;
@@ -44,6 +49,11 @@ class SimulationPanel extends JPanel {
     private Image[] QUEEN, WARRIOR, GATHERER, PREDATOR;
     private Image BERRY, BERRY_FERMENTED, GRAIN;
 
+    /**
+     *
+     * @param simulation
+     * @param size
+     */
     public SimulationPanel(Simulation simulation, Dimension size) {
         super(null);
         this.setPreferredSize(size);
@@ -70,6 +80,11 @@ class SimulationPanel extends JPanel {
         }
     }
 
+    /**
+     *
+     * @param image
+     * @return
+     */
     private Image[] getAllImageRotations(BufferedImage image) {
         Image[] images = new Image[4];
         images[0] = this.getScaledInstance(image);
@@ -79,6 +94,12 @@ class SimulationPanel extends JPanel {
         return images;
     }
 
+    /**
+     *
+     * @param original
+     * @param angle
+     * @return
+     */
     private BufferedImage rotate(BufferedImage original, double angle) {
 
         int w = original.getWidth();
@@ -92,10 +113,19 @@ class SimulationPanel extends JPanel {
         return rotated;
     }
 
+    /**
+     *
+     * @param original
+     * @return
+     */
     private Image getScaledInstance(BufferedImage original) {
         return original.getScaledInstance(GUI.STEP_PIXEL, GUI.STEP_PIXEL, 0);
     }
 
+    /**
+     *
+     * @param g
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);

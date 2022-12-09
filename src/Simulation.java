@@ -10,6 +10,8 @@ public class Simulation {
     public static final int MAX_PREDATORS = 5;
     public static final int EGG_COST = 100;
     public static final int PROXIMITY = 10;
+    public static final int LOW_HEALTH = 10;
+    public static final int MAX_INVENTORY = 2;
 
     private final Colony colony;
     public final Terrain terrain;
@@ -17,17 +19,24 @@ public class Simulation {
     public final ArrayList<Predator> predators;
     public final ArrayList<Predator> deadPredators;
 
+    /**
+     *
+     * @param lines
+     * @param columns
+     */
     public Simulation(int lines, int columns) {
         this.terrain = new Terrain(lines, columns);
         this.colony = new Colony();
 
-        //this.colony.onSpawnAntRequest(AntType.GATHERER_ANT, 1, 1);
         this.barriers = new ArrayList<>();
         this.establishBorders();
         this.predators = new ArrayList<>();
         this.deadPredators=new ArrayList<>();
     }
 
+    /**
+     *
+     */
     private void establishBorders() {
         for(int x = -1; x < this.terrain.nbLignes + 1; x++) {
             for(int y = -1; y < this.terrain.nbColonnes + 1; y++) {
@@ -38,6 +47,9 @@ public class Simulation {
         }
     }
 
+    /**
+     *
+     */
     public void tick() {
         iteration++;
 
@@ -84,10 +96,18 @@ public class Simulation {
         this.deadPredators.removeAll(this.deadPredators);
     }
 
+    /**
+     *
+     * @return
+     */
     public ColonyData getAsColonyData() {
         return this.colony;
     }
 
+    /**
+     *
+     * @return
+     */
     private boolean ressourcesMax() {
         int counter = 0;
         for(int x = 0; x < terrain.nbLignes; x++) {
@@ -97,5 +117,4 @@ public class Simulation {
         }
         return counter >= Simulation.MAX_RESSOURCES;
     }
-
 }

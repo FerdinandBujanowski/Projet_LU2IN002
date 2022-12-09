@@ -3,10 +3,23 @@ import java.util.ArrayList;
 
 public class WarriorAnt extends Ant {
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @param antType
+     */
     public WarriorAnt(int x, int y, AntType antType) {
         super(x, y, antType);
     }
 
+    /**
+     *
+     * @param terrain
+     * @param barriers
+     * @param predators
+     * @param colonyData
+     */
     @Override
     public void tick(Terrain terrain, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
         super.tick(terrain, barriers, predators, colonyData);

@@ -4,8 +4,13 @@ public enum Direction {
 
     UP, DOWN, LEFT, RIGHT;
 
+    /**
+     *
+     * @param lastMovementVector
+     * @return
+     */
     public static Direction getDirection(Point lastMovementVector) {
-        //each movement should have a norm of 1
+        //assurer que chaque déplacement est vraiment que d'un seul pixel
         assert Math.abs(lastMovementVector.x) + Math.abs(lastMovementVector.y) == 1;
         if(lastMovementVector.x == -1) return LEFT;
         else if(lastMovementVector.x == 1) return RIGHT;
@@ -14,6 +19,10 @@ public enum Direction {
         else return UP;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getCorrespondingIndex() {
         return switch (this) {
             case UP -> 0;

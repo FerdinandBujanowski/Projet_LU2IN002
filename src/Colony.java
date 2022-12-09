@@ -9,6 +9,9 @@ public class Colony implements ColonyData {
 
     public static double pWarriorSpawn = 0.4;
 
+    /**
+     *
+     */
     public Colony() {
         this.queenAnt = (QueenAnt) AntType.QUEEN_ANT.createNewInstance(0, 0);
         this.ants = new ArrayList<>();
@@ -16,6 +19,12 @@ public class Colony implements ColonyData {
         this.ants.add(this.queenAnt);
     }
 
+    /**
+     *
+     * @param terrain
+     * @param barriers
+     * @param predators
+     */
     public void tick(Terrain terrain, ArrayList<Barrier> barriers, ArrayList<Predator> predators) {
         ArrayList<Ant> deadAnts = new ArrayList<>();
         for(Ant ant : this.ants) {
@@ -27,6 +36,11 @@ public class Colony implements ColonyData {
         this.newbornAnts.removeAll(this.newbornAnts);
     }
 
+    /**
+     *
+     * @param pos
+     * @return
+     */
     private Ant getAntFromPos(Point pos) {
         for (Ant a: ants){
             if ((a.getPosition()).equals(pos)) return a;
@@ -34,11 +48,20 @@ public class Colony implements ColonyData {
         return null;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Point getQueenPosition() {
         return new Point(this.queenAnt.getX(), this.queenAnt.getY());
     }
 
+    /**
+     *
+     * @param self
+     * @return
+     */
     @Override
     public ArrayList<Point> getOtherAntPositions(Point self) {
         ArrayList<Point> antPositions = new ArrayList<>();
@@ -48,6 +71,10 @@ public class Colony implements ColonyData {
         return antPositions;
     }
 
+    /**
+     *
+     * @param antId
+     */
     @Override
     public void onFeedQueenRequest(int antId) {
         for(Ant ant : this.ants) {
@@ -61,16 +88,30 @@ public class Colony implements ColonyData {
         }
     }
 
+    /**
+     *
+     * @param antType
+     * @param x
+     * @param y
+     */
     @Override
     public void onSpawnAntRequest(AntType antType, int x, int y) {
         this.newbornAnts.add(antType.createNewInstance(x, y));
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getQueenHealth() {
         return this.queenAnt.currentHealth;
     }
 
+    /**
+     *
+     * @param pos
+     */
     @Override
     public void requestDamageAnt(Point pos) {
         Ant ant = this.getAntFromPos(pos);
@@ -79,6 +120,11 @@ public class Colony implements ColonyData {
         else ant.currentHealth--;
     }
 
+    /**
+     *
+     * @param antPosition
+     * @return
+     */
     @Override
     public Direction getAntDirection(Point antPosition) {
         Ant ant = this.getAntFromPos(antPosition);
@@ -86,6 +132,11 @@ public class Colony implements ColonyData {
         return ant.currentDirection;
     }
 
+    /**
+     *
+     * @param position
+     * @return
+     */
     @Override
     public AntType getAntType(Point position) {
         Ant ant = this.getAntFromPos(position);
@@ -93,6 +144,10 @@ public class Colony implements ColonyData {
         return ant.antType;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getGathererCount() {
         int counter = 0;

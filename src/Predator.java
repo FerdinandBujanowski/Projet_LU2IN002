@@ -5,11 +5,21 @@ public class Predator extends Animal {
 
     public static final double p_spawn = 0.01;
 
+    /**
+     *
+     * @param x
+     * @param y
+     */
     public Predator(int x, int y) {
         super(x, y);
         this.currentHealth = 20;
     }
 
+    /**
+     *
+     * @param predators
+     * @return
+     */
     public static ArrayList<Point> getPredatorPositions(ArrayList<Predator> predators) {
         ArrayList<Point> positions = new ArrayList<>();
         for(Predator predator : predators) {
@@ -17,6 +27,14 @@ public class Predator extends Animal {
         }
         return positions;
     }
+
+    /**
+     *
+     * @param x
+     * @param y
+     * @param predators
+     * @return
+     */
     public static Predator getPredatorAtPosition(int x, int y, ArrayList<Predator> predators) {
         for(Predator predator : predators) {
             if(predator.getX() == x && predator.getY() == y) return predator;
@@ -24,6 +42,13 @@ public class Predator extends Animal {
         return null;
     }
 
+    /**
+     *
+     * @param terrain
+     * @param barriers
+     * @param predators
+     * @param colonyData
+     */
     @Override
     public void tick(Terrain terrain, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
         //Attacks any ants it's nearby
@@ -40,6 +65,12 @@ public class Predator extends Animal {
         }
     }
 
+    /**
+     *
+     * @param predatorPosition
+     * @param predators
+     * @return
+     */
     public static Direction getPredatorDirection(Point predatorPosition, ArrayList<Predator> predators) {
         Predator predator = Predator.getPredatorAtPosition(predatorPosition.x, predatorPosition.y, predators);
         if(predator == null) return Direction.UP;
