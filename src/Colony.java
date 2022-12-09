@@ -13,10 +13,14 @@ public class Colony implements ColonyData {
      *
      */
     public Colony() {
-        this.queenAnt = (QueenAnt) AntType.QUEEN_ANT.createNewInstance(0, 0);
         this.ants = new ArrayList<>();
         this.newbornAnts = new ArrayList<>();
-        this.ants.add(this.queenAnt);
+        try {
+            this.onSpawnAntRequest(AntType.QUEEN_ANT, Simulation.QUEEN_X, Simulation.QUEEN_Y);
+        } catch (QueenAlreadyExistsException e) {
+            e.printStackTrace();
+        }
+        this.queenAnt = (QueenAnt) this.ants.get(0);
     }
 
     /**
@@ -95,7 +99,8 @@ public class Colony implements ColonyData {
      * @param y
      */
     @Override
-    public void onSpawnAntRequest(AntType antType, int x, int y) {
+    public void onSpawnAntRequest(AntType antType, int x, int y) throws QueenAlreadyExistsException {
+        if(this.queenAnt != null && antType == AntType.QUEEN_ANT) throw new QueenAlreadyExistsException();
         this.newbornAnts.add(antType.createNewInstance(x, y));
     }
 

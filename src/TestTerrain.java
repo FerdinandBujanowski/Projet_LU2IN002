@@ -1,7 +1,7 @@
 /**
  * @author Ferdinand Bujanowski et Daniel Panariti (LU2IN002 2022oct)
+ * Le début du programme : la simulation ainsi que le GUI sont initialisés + mis à jour chaque itération
  */
-
 public class TestTerrain {
 
 	public static void main(String[] args) {

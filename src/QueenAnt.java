@@ -7,8 +7,8 @@ public class QueenAnt extends Ant {
      *
      * @param antType
      */
-    public QueenAnt(AntType antType) {
-        super(Simulation.QUEEN_X, Simulation.QUEEN_Y, antType);
+    public QueenAnt(int x, int y, AntType antType) {
+        super(x, y, antType);
     }
 
     @Override
@@ -20,10 +20,13 @@ public class QueenAnt extends Ant {
             this.currentEnergy -= Simulation.EGG_COST;
             Point freePosition = this.getFreePoint(this.getPosition(), barriers, predators, colonyData);
             if(freePosition != null) {
-                if (Math.random() <= Colony.pWarriorSpawn) {
-                    colonyData.onSpawnAntRequest(AntType.WARRIOR_ANT, freePosition.x, freePosition.y);
+                try {
+                    if (Math.random() <= Colony.pWarriorSpawn) {
+                        colonyData.onSpawnAntRequest(AntType.WARRIOR_ANT, freePosition.x, freePosition.y);
+                    } else colonyData.onSpawnAntRequest(AntType.GATHERER_ANT, freePosition.x, freePosition.y);
+                } catch(QueenAlreadyExistsException e) {
+                    e.printStackTrace();
                 }
-                else colonyData.onSpawnAntRequest(AntType.GATHERER_ANT, freePosition.x, freePosition.y);
             }
         }
 
