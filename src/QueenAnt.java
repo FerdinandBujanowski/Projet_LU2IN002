@@ -3,6 +3,10 @@ import java.util.ArrayList;
 
 public class QueenAnt extends Ant {
 
+    /**
+     *
+     * @param antType
+     */
     public QueenAnt(AntType antType) {
         super(Simulation.QUEEN_X, Simulation.QUEEN_Y, antType);
     }

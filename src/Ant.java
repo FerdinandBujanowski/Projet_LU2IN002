@@ -16,20 +16,33 @@ public abstract class Ant extends Animal {
 
     protected final AntType antType;
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @param antType
+     */
     public Ant(int x, int y, AntType antType) {
         super(x, y);
         this.id = antCounter;
         antCounter++;
-        this.inventory = new Ressource[2]; //TODO magic number to global constant
+        this.inventory = new Ressource[Simulation.MAX_INVENTORY];
         this.antType = antType;
         this.currentHealth = this.antType.maxHealth;
         this.currentEnergy = this.antType.maxEnergy;
     }
 
+    /**
+     *
+     * @param terrain
+     * @param barriers
+     * @param predators
+     * @param colonyData
+     */
     @Override
     public void tick(Terrain terrain, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
         this.energyZero = this.currentEnergy == 0;
-        this.healthLow = this.currentHealth < 10; //TODO magic number to global constant
+        this.healthLow = this.currentHealth < Simulation.LOW_HEALTH;
 
         Point queenPosition = colonyData.getQueenPosition();
         assert queenPosition != null;
@@ -37,7 +50,7 @@ public abstract class Ant extends Animal {
 
         this.closestPredatorPosition = this.updateClosestPredatorPosition(predators);
         if(this.closestPredatorPosition != null) {
-            this.predatorInProximity = this.distance(this.closestPredatorPosition.x, this.closestPredatorPosition.y) <= Simulation.PROXIMITY; //TODO magic number to global constant
+            this.predatorInProximity = this.distance(this.closestPredatorPosition.x, this.closestPredatorPosition.y) <= Simulation.PROXIMITY;
         } else this.predatorInProximity = false;
 
         this.closestRessourcePosition = this.updateClosestRessourcePosition(terrain);
@@ -45,14 +58,22 @@ public abstract class Ant extends Animal {
         if(this.drunkCooldown > 0) this.drunkCooldown--;
     }
 
+    /**
+     *
+     * @param ressource
+     */
     protected void eat(Ressource ressource) {
         this.currentEnergy += ressource.getQuantite();
         if(ressource instanceof Berry && ((Berry)ressource).isFermented()) {
             this.drunkCooldown += Berry.DRUNK_TICKS;
-            System.out.println(this.getClass().toString() + " got drunk!");
         }
     }
 
+    /**
+     *
+     * @param predators
+     * @return
+     */
     private Point updateClosestPredatorPosition(ArrayList<Predator> predators) {
         double shortestDistance = -1;
         Point closestPosition = null;
@@ -66,6 +87,11 @@ public abstract class Ant extends Animal {
         return closestPosition;
     }
 
+    /**
+     *
+     * @param terrain
+     * @return
+     */
     private Point updateClosestRessourcePosition(Terrain terrain) {
         double shortestDistance = -1;
         Point closestPosition = null;
@@ -83,6 +109,10 @@ public abstract class Ant extends Animal {
         return closestPosition;
     }
 
+    /**
+     *
+     * @return
+     */
     protected int getLastInventoryIndex() {
         int lastIndex = -1;
         for(int i = 0; i < this.inventory.length; i++) {

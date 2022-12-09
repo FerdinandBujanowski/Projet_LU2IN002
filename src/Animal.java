@@ -10,31 +10,75 @@ public abstract class Animal {
     private int x, y;
     protected Direction currentDirection;
 
+    /**
+     *
+     * @param x
+     * @param y
+     */
     public Animal(int x, int y) {
         this.x = x;
         this.y = y;
         this.currentDirection = Direction.UP;
     }
 
+    /**
+     * @return
+     */
     public int getX() {
         return this.x;
     }
+
+    /**
+     * @return
+     */
     public int getY() {
         return this.y;
     }
+
+    /**
+     * @return
+     */
     public Point getPosition() {
         return new Point(this.x, this.y);
     }
+
+    /**
+     * @param x
+     * @param y
+     * @return
+     */
     public double distance(int x, int y) {
         return Math.sqrt(Math.pow(x - this.x, 2) + Math.pow(y - this.y, 2));
     }
+
+    /**
+     *
+     * @param newX
+     * @param newY
+     */
     public void seDeplacer(int newX, int newY) {
         this.x = newX;
         this.y = newY;
     }
 
+    /**
+     *
+     * @param terrain
+     * @param barriers
+     * @param predators
+     * @param colonyData
+     */
     public abstract void tick(Terrain terrain, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData);
 
+
+    /**
+     *
+     * @param vector
+     * @param barriers
+     * @param predators
+     * @param colonyData
+     * @return
+     */
     public boolean tryMoveAlongVector(Point vector, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
 
         int absX = Math.abs(vector.x);
@@ -55,6 +99,14 @@ public abstract class Animal {
         return true;
     }
 
+    /**
+     *
+     * @param currentPosition
+     * @param barriers
+     * @param predators
+     * @param colonyData
+     * @return
+     */
     public Point getFreePoint(Point currentPosition, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
         ArrayList<Point> freePoints = new ArrayList<>();
 
@@ -75,6 +127,12 @@ public abstract class Animal {
         else return freePoints.get((int)(Math.random() * freePoints.size()));
     }
 
+    /**
+     *
+     * @param newPosition
+     * @param otherPositions
+     * @return
+     */
     private static boolean animalBlocking(Point newPosition, ArrayList<Point> otherPositions) {
         for(Point position : otherPositions) {
             if(position.x == newPosition.x && position.y == newPosition.y) return true;
@@ -82,11 +140,23 @@ public abstract class Animal {
         return false;
     }
 
+    /**
+     *
+     * @param otherPosition
+     * @return
+     */
     public boolean touches(Point otherPosition) {
         if(otherPosition == null) return false;
         return Math.abs(this.getX() - otherPosition.x) <= 1 && Math.abs(this.getY() - otherPosition.y) <= 1;
     }
 
+    /**
+     *
+     * @param vector
+     * @param barriers
+     * @param predators
+     * @param colonyData
+     */
     public void tryMoving(Point vector, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
         if((this).drunkCooldown > 0) {
             Point randomPoint = this.getFreePoint(this.getPosition(), barriers, predators, colonyData);
@@ -111,10 +181,17 @@ public abstract class Animal {
         }
     }
 
+    /**
+     *
+     * @param oldPosition
+     */
     private void updateDirection(Point oldPosition) {
         Point directionVector = new Point(this.getX() - oldPosition.x, this.getY() - oldPosition.y);
         this.currentDirection = Direction.getDirection(directionVector);
     }
 
+    /**
+     *
+     */
     public void calculateMovingCosts() {}
 }

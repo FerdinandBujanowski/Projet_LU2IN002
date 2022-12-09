@@ -3,10 +3,23 @@ import java.util.ArrayList;
 
 public class GathererAnt extends Ant {
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @param antType
+     */
     public GathererAnt(int x, int y, AntType antType) {
         super(x, y, antType);
     }
 
+    /**
+     *
+     * @param terrain
+     * @param barriers
+     * @param predators
+     * @param colonyData
+     */
     @Override
     public void tick(Terrain terrain, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
         super.tick(terrain, barriers, predators, colonyData);
@@ -50,84 +63,13 @@ public class GathererAnt extends Ant {
         }
     }
 
-    /*
-    public void tick(Terrain terrain, ArrayList<Barrier> barriers, ArrayList<Predator> predators, ColonyData colonyData) {
-        super.tick(terrain, barriers, predators, colonyData);
 
-        Boolean willMove=false;
-        Point vectorToDest=new Point();
-
-        if (this.predatorInProximity && this.closestPredatorPosition != null) {
-            // run away from predator
-            Point vectorToPredator = new Point(this.closestPredatorPosition.x - this.getX(), this.closestPredatorPosition.y - this.getY());
-            //invert vector pointing to predator
-            Point vectorFromPredator = new Point(vectorToPredator.x * -1, vectorToPredator.y * -1);
-            willMove=true;
-            vectorToDest=vectorFromPredator;
-        }
-        else {
-            if(this.getLastInventoryIndex() == this.inventory.length - 1) {
-                //bring food to queen
-                Point queenPosition = colonyData.getQueenPosition();
-                if(this.touches(queenPosition)) {
-                    colonyData.onFeedQueenRequest(this.id);
-                } else {
-                    willMove=true;
-                    Point vectorToQueen = new Point(queenPosition.x - this.getX(), queenPosition.y - this.getY());
-                    vectorToDest=vectorToQueen;
-                }
-            } else {
-                //gather more food
-                Point closest = this.closestRessourcePosition;
-                if(closest != null) {
-                    if(closest.x == this.getX() && closest.y == this.getY()) {
-                        this.inventory[this.getLastInventoryIndex() + 1] = terrain.videCase(closest.x, closest.y);
-                    } else {
-                        willMove=true;
-                        Point vectorToRessource = new Point(closest.x - this.getX(), closest.y - this.getY());
-                        vectorToDest=vectorToRessource;
-                    }
-                }
-            }
-            if(this.energyZero) {
-                //if food equipped eat food
-                if(this.getLastInventoryIndex() > -1) {
-                    if(this.getLastInventoryIndex() > -1) {
-                        if (this.inventory[(this.inventory.length)-1] instanceof Berry){
-                            if (((Berry) this.inventory[(this.inventory.length)-1]).isFermented()){
-                                System.out.println("Drunk!");
-                                isDrunk=true;
-                            }
-                        }
-                    }
-                    this.eat(this.inventory[this.getLastInventoryIndex()]);
-                    this.inventory[this.getLastInventoryIndex()] = null;
-                }
-            }
-        }
-        if (willMove){
-            if (isDrunk){
-                Point vectorToDestInverted=new Point(vectorToDest.x * -1, vectorToDest.y * -1);
-                vectorToDest=vectorToDestInverted;
-                staysDrunk();
-            }
-            this.tryMoving(vectorToDest, barriers, predators, colonyData);
-        }
-    }
+    /**
+     *
      */
     @Override
     public void calculateMovingCosts() {
         if(!this.energyZero) this.currentEnergy--;
         else this.currentHealth--;
     }
-
-    /*
-    public void staysDrunk(){
-        if (drunkTicks<=0){
-            isDrunk=false;
-            drunkTicks+=10; 
-        }
-        else drunkTicks--;
-    }
-     */
 }

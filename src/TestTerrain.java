@@ -18,6 +18,8 @@ public class TestTerrain {
 				e.printStackTrace();
 			}
 		}
-		//gui.dispose();
+
+		System.out.println("la reine a survécu pendant " + Simulation.iteration + " itérations !");
+		gui.dispose();
 	}
 }
